@@ -5,6 +5,8 @@ VisualStudioVersion = 17.14.36915.13 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Record-Shop-Backend", "Record-Shop-Backend\Record-Shop-Backend.csproj", "{1F0F9871-0325-4DA4-AB19-6F300F31D66C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Record-Shop-Tests", "Record-Shop-Tests\Record-Shop-Tests.csproj", "{A90A398D-6963-4329-BACA-688015BB266F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{1F0F9871-0325-4DA4-AB19-6F300F31D66C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F0F9871-0325-4DA4-AB19-6F300F31D66C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F0F9871-0325-4DA4-AB19-6F300F31D66C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A90A398D-6963-4329-BACA-688015BB266F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A90A398D-6963-4329-BACA-688015BB266F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A90A398D-6963-4329-BACA-688015BB266F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A90A398D-6963-4329-BACA-688015BB266F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
