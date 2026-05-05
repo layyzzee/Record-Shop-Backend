@@ -199,7 +199,7 @@ namespace Record_Shop_Tests.Controllers
 
             //Assert
             Assert.That(result, Is.InstanceOf<BadRequestObjectResult>());
-            Assert.That(IActionResult.Value, Is.EqualTo(dark));
+            Assert.That(IActionResult.Value, Is.EqualTo("Album Name must be present"));
         }
     }
 }

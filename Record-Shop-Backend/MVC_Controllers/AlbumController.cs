@@ -47,6 +47,10 @@ namespace Record_Shop_Backend.MVC_Controllers
         [HttpPost]
         public IActionResult PostAlbum(Album album)
         {
+            if (string.IsNullOrEmpty(album.Name))
+            {
+                return BadRequest("Album Name must be present");
+            }
             return Ok(album);
         }
     }
