@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Record_Shop_Backend.MVC_Services;
 
 namespace Record_Shop_Backend.MVC_Controllers
@@ -17,6 +18,10 @@ namespace Record_Shop_Backend.MVC_Controllers
         [HttpGet]
         public IActionResult GetAllAlbums()
         {
+            if (_albumService.FetchAllAlbums().IsNullOrEmpty())
+            {
+                return NoContent();
+            }
             return Ok(_albumService.FetchAllAlbums());
         }
     }

@@ -5,7 +5,7 @@ namespace Record_Shop_Backend.MVC_Services
 {
     public interface IAlbumService
     {
-        public IEnumerable<Album> FetchAllAlbums();
+        public IEnumerable<Album>? FetchAllAlbums();
     }
     public class AlbumService : IAlbumService
     {
@@ -16,7 +16,7 @@ namespace Record_Shop_Backend.MVC_Services
         }
 
         //GET METHODS
-        public IEnumerable<Album> FetchAllAlbums()
+        public IEnumerable<Album>? FetchAllAlbums()
         {
             return _albumRepository.GrabAllAlbums();
         }
