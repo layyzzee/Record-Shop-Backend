@@ -18,11 +18,12 @@ namespace Record_Shop_Backend.MVC_Controllers
         [HttpGet]
         public IActionResult GetAllAlbums()
         {
-            if (_albumService.FetchAllAlbums().IsNullOrEmpty())
+            var albums = _albumService.FetchAllAlbums();
+            if (albums == null)
             {
                 return NoContent();
             }
-            return Ok(_albumService.FetchAllAlbums());
+            return Ok(albums);
         }
     }
 }

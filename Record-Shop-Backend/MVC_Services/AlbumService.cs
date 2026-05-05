@@ -19,11 +19,12 @@ namespace Record_Shop_Backend.MVC_Services
         //GET METHODS
         public IEnumerable<Album>? FetchAllAlbums()
         {
-            if (_albumRepository.GrabAllAlbums().IsNullOrEmpty()) //Combining Empty and Null for controller
+            var albums = _albumRepository.GrabAllAlbums();
+            if (albums == null || !albums.Any()) //returning null if null OR empty
             {
                 return null;
             }
-            return _albumRepository.GrabAllAlbums();
+            return albums;
         }
 
     }
