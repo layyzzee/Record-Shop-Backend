@@ -20,17 +20,37 @@ namespace Record_Shop_Backend.MVC_Services
         //GET METHODS
         public IEnumerable<Album>? FetchAllAlbums()
         {
-            var albums = _albumRepository.GrabAllAlbums();
-            if (albums == null || !albums.Any()) //returning null if null OR empty
+            try
             {
+                var albums = _albumRepository.GrabAllAlbums();
+                if (albums == null || !albums.Any())
+                {
+                    return null;
+                }
+                return albums;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
                 return null;
             }
-            return albums;
         }
         public Album? FetchAlbumById(int id)
         {
-            return null;
+            try
+            {
+                var album = _albumRepository.GrabAlbumById(id);
+                if (album == null || string.IsNullOrEmpty(album.Name))
+                {
+                    return null;
+                }
+                return album;
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
         }
-
     }
 }
