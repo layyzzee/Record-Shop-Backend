@@ -23,7 +23,7 @@ namespace Record_Shop_Backend.MVC_Repositories
         }
         public Album? GrabAlbumById(int id)
         {
-            return new Album();
+            return _context.Albums.FirstOrDefault(album => album.AlbumId == id);
         }
 
     }

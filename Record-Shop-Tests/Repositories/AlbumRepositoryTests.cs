@@ -115,5 +115,90 @@ namespace Record_Shop_Tests.RepositoriesTests
             //Assert
             Assert.That(result, Is.EquivalentTo(albumsToAdd));
         }
+
+
+        [Test]
+        public void GrabAlbumById_ReturnsNull_WhenDbEmpty()
+        {
+            //Arrange
+            var id = 2;
+
+            //Act
+            var result = _albumRepository.GrabAlbumById(id);
+
+            //Assert
+            Assert.That(result, Is.Null);
+        }
+        [Test]
+        public void GrabAlbumById_ReturnsNull_WhenInput0()
+        {
+            //Arrange
+            var id = 0;
+
+            //Act
+            var result = _albumRepository.GrabAlbumById(id);
+
+            //Assert
+            Assert.That(result, Is.Null);
+        }
+        [Test]
+        public void GrabAlbumById_ReturnsAlbum_WhenIdMatchesAlbum()
+        {
+            //Arrange
+            var id = 1;
+            Album dark = new Album
+            {
+                AlbumId = 0,
+                Name = "Dark",
+                ReleaseYear = "2025",
+                Genre = "Glitch Hop / Alternative R&B",
+                Price = 18.99,
+                Stock = 50
+            };
+            _context.Albums.Add(dark);
+            _context.SaveChanges();
+
+            //Act
+            var result = _albumRepository.GrabAlbumById(id);
+
+            //Assert
+            Assert.That(result, Is.EqualTo(dark));
+        }
+        [Test]
+        public void GrabAlbumById_ReturnsAlbum_WhenMultipleAlbums()
+        {
+            //Arrange
+            var id = 1;
+            var idTwo = 2;
+            Album ityttmom = new Album
+            {
+                AlbumId = 0,
+                Name = "i think you think too much of me",
+                ReleaseYear = "2016",
+                Genre = "Indie Pop / Rock",
+                Price = 14.99,
+                Stock = 15
+            };
+            Album dark = new Album
+            {
+                AlbumId = 0,
+                Name = "Dark",
+                ReleaseYear = "2025",
+                Genre = "Glitch Hop / Alternative R&B",
+                Price = 18.99,
+                Stock = 50
+            };
+            _context.Albums.Add(dark);
+            _context.Albums.Add(ityttmom);
+            _context.SaveChanges();
+
+            //Act
+            var result = _albumRepository.GrabAlbumById(id);
+            var result2 = _albumRepository.GrabAlbumById(idTwo);
+
+            //Assert
+            Assert.That(result, Is.EqualTo(dark));
+            Assert.That(result2, Is.EqualTo(ityttmom));
+        }
     }
 }
