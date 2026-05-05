@@ -12,5 +12,12 @@ namespace Record_Shop_Backend.MVC_Controllers
         {
             _albumService = albumService;
         }
+
+        //GET METHODS
+        [HttpGet]
+        public IActionResult GetAllAlbums()
+        {
+            return Ok(_albumService.FetchAllAlbums());
+        }
     }
 }
