@@ -25,5 +25,21 @@ namespace Record_Shop_Backend.MVC_Controllers
             }
             return Ok(albums);
         }
+
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult GetAlbumById(int id)
+        {
+            if(id <= 0)
+            {
+                return BadRequest("Please use a positive int as an ID");
+            }
+            var album = _albumService.FetchAlbumById(id);
+            if(album == null)
+            {
+                return NotFound("No album has been registered with this ID");
+            }
+            return Ok(album);
+        }
     }
 }

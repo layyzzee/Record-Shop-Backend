@@ -7,6 +7,8 @@ namespace Record_Shop_Backend.MVC_Repositories
     public interface IAlbumRepository
     {
         public IEnumerable<Album>? GrabAllAlbums();
+        public Album? GrabAlbumById(int id);
+
     }
     public class AlbumRepository : IAlbumRepository
     {
@@ -19,5 +21,10 @@ namespace Record_Shop_Backend.MVC_Repositories
         {
             return _context.Albums.ToList() ?? new List<Album>();
         }
+        public Album? GrabAlbumById(int id)
+        {
+            return new Album();
+        }
+
     }
 }

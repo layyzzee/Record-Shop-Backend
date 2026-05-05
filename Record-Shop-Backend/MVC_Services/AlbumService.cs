@@ -7,6 +7,7 @@ namespace Record_Shop_Backend.MVC_Services
     public interface IAlbumService
     {
         public IEnumerable<Album>? FetchAllAlbums();
+        public Album? FetchAlbumById(int id);
     }
     public class AlbumService : IAlbumService
     {
@@ -25,6 +26,10 @@ namespace Record_Shop_Backend.MVC_Services
                 return null;
             }
             return albums;
+        }
+        public Album? FetchAlbumById(int id)
+        {
+            return null;
         }
 
     }

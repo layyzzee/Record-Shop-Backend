@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Record_Shop_Backend.MVC_Controllers;
@@ -56,7 +55,7 @@ namespace Record_Shop_Tests.Controllers
 
             //Assert
             Assert.That(albumList, Is.EquivalentTo(myAlbums));
-            Assert.That(IActionResult.StatusCode, Is.EqualTo(200));
+            Assert.That(result, Is.InstanceOf<OkObjectResult>());
         }
 
         [Test]
@@ -100,7 +99,60 @@ namespace Record_Shop_Tests.Controllers
 
             //Assert
             Assert.That(albumList, Is.EquivalentTo(myAlbums));
-            Assert.That(IActionResult.StatusCode, Is.EqualTo(200));
+            Assert.That(result, Is.InstanceOf<OkObjectResult>());
+        }
+
+
+        [Test]
+        public void GetAlbumById_ReturnsNotFound_WhenIdNotExistsInDb()
+        {
+            //Arrange
+            int id = 2;
+
+            //Act
+            var result = _albumController.GetAlbumById(id);
+
+            //Assert
+            Assert.That(result, Is.InstanceOf<NotFoundObjectResult>());
+        }
+        [Test]
+        public void GetAlbumById_ReturnsOk_WhenValidRequest()
+        {
+            //Arrange
+            Album dark = new Album
+            {
+                AlbumId = 3,
+                Name = "Dark",
+                ReleaseYear = "2025",
+                Genre = "Glitch Hop / Alternative R&B",
+                Price = 18.99,
+                Stock = 50
+            };
+            var id = 3;
+            _albumServiceMock.Setup(service => service.FetchAlbumById(id)).Returns(dark);
+
+
+            //Act
+            var result = _albumController.GetAlbumById(id);
+            var IActionResult = (OkObjectResult)result;
+            var myAlbums = (Album)IActionResult.Value;
+
+            //Assert
+            var expected = dark;
+            Assert.That(IActionResult.Value, Is.EqualTo(expected));
+            Assert.That(result, Is.InstanceOf<OkObjectResult>());
+        }
+        [Test]
+        public void GetAlbumById_ReturnsBadRequest_WhenIdInvalid()
+        {
+            //Arrange
+            int id = -2;
+
+            //Act
+            var result = _albumController.GetAlbumById(id);
+
+            //Assert
+            Assert.That(result, Is.InstanceOf<BadRequestObjectResult>());
         }
     }
 }
