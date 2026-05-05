@@ -154,5 +154,52 @@ namespace Record_Shop_Tests.Controllers
             //Assert
             Assert.That(result, Is.InstanceOf<BadRequestObjectResult>());
         }
+
+
+        [Test]
+        public void PostAlbum_ReturnsAlbum_WhenInputValid()
+        {
+            //Arrange
+            Album dark = new Album
+            {
+                AlbumId = 3,
+                Name = "Dark",
+                ReleaseYear = "2025",
+                Genre = "Glitch Hop / Alternative R&B",
+                Price = 18.99,
+                Stock = 50
+            };
+            var album = dark;
+
+            //Act
+            var result = _albumController.PostAlbum(album);
+            var IActionResult = (OkObjectResult)result;
+
+            //Assert
+            Assert.That(result, Is.InstanceOf<OkObjectResult>());
+            Assert.That(IActionResult.Value, Is.EqualTo(dark));
+        }
+        [Test]
+        public void PostAlbum_ReturnsBadRequest_WhenInputNoName()
+        {
+            //Arrange
+            Album dark = new Album
+            {
+                AlbumId = 3,
+                ReleaseYear = "2025",
+                Genre = "Glitch Hop / Alternative R&B",
+                Price = 18.99,
+                Stock = 50
+            };
+            var album = dark;
+
+            //Act
+            var result = _albumController.PostAlbum(album);
+            var IActionResult = (BadRequestObjectResult)result;
+
+            //Assert
+            Assert.That(result, Is.InstanceOf<BadRequestObjectResult>());
+            Assert.That(IActionResult.Value, Is.EqualTo(dark));
+        }
     }
 }
