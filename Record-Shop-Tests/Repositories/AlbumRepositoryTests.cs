@@ -17,6 +17,13 @@ namespace Record_Shop_Tests.RepositoriesTests
         [Test]
         public void Test1()
         {
+            //Arrange
+
+
+            //Act
+
+
+            //Assert
             Assert.Pass();
         }
     }
