@@ -8,6 +8,8 @@ namespace Record_Shop_Backend.MVC_Services
     {
         public IEnumerable<Album>? FetchAllAlbums();
         public Album? FetchAlbumById(int id);
+        public Album? SendAlbum(Album album);
+
     }
     public class AlbumService : IAlbumService
     {
@@ -35,6 +37,7 @@ namespace Record_Shop_Backend.MVC_Services
                 return null;
             }
         }
+
         public Album? FetchAlbumById(int id)
         {
             try
@@ -51,6 +54,11 @@ namespace Record_Shop_Backend.MVC_Services
                 Console.WriteLine(ex.Message);
                 return null;
             }
+        }
+
+        public Album? SendAlbum(Album album)
+        {
+            return null;
         }
     }
 }

@@ -8,6 +8,8 @@ namespace Record_Shop_Backend.MVC_Repositories
     {
         public IEnumerable<Album>? GrabAllAlbums();
         public Album? GrabAlbumById(int id);
+        public Album? SubmitAlbum(Album album);
+
 
     }
     public class AlbumRepository : IAlbumRepository
@@ -17,13 +19,20 @@ namespace Record_Shop_Backend.MVC_Repositories
         {
             _context = albumDb;
         }
+
         public IEnumerable<Album>? GrabAllAlbums()
         {
             return _context.Albums.ToList() ?? new List<Album>();
         }
+
         public Album? GrabAlbumById(int id)
         {
             return _context.Albums.FirstOrDefault(album => album.AlbumId == id);
+        }
+
+        public Album? SubmitAlbum(Album album)
+        {
+            return null;
         }
 
     }

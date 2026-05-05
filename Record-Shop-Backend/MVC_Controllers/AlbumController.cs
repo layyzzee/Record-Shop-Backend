@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using Record_Shop_Backend.MVC_Services;
+using Record_Shop_Backend.MVC_Data_Models;
 
 namespace Record_Shop_Backend.MVC_Controllers
 {
@@ -39,6 +39,14 @@ namespace Record_Shop_Backend.MVC_Controllers
             {
                 return NotFound("No album has been registered with this ID");
             }
+            return Ok(album);
+        }
+
+
+        //POST
+        [HttpPost]
+        public IActionResult PostAlbum(Album album)
+        {
             return Ok(album);
         }
     }
