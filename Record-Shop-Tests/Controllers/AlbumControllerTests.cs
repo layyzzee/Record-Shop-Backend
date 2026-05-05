@@ -7,7 +7,7 @@ using Record_Shop_Backend.MVC_Services;
 
 namespace Record_Shop_Tests.Controllers
 {
-    public class Tests
+    public class AlbumControllerTests
     {
         private Mock<IAlbumService> _albumServiceMock;
         private AlbumController _albumController;

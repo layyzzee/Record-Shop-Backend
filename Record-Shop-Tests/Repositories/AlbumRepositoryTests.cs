@@ -2,9 +2,9 @@ using Moq;
 using Record_Shop_Backend.MVC_Repositories;
 using Record_Shop_Backend.MVC_Services;
 
-namespace Record_Shop_Tests.Repositories
+namespace Record_Shop_Tests.RepositoriesTests
 {
-    public class Tests
+    public class AlbumRepositoryTests
     {
         private AlbumRepository _albumRepository;
 
