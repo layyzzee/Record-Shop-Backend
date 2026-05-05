@@ -1,4 +1,6 @@
-﻿using Record_Shop_Backend.MVC_Data_Models;
+﻿using Microsoft.IdentityModel.Tokens;
+using Record_Shop_Backend.Data;
+using Record_Shop_Backend.MVC_Data_Models;
 
 namespace Record_Shop_Backend.MVC_Repositories
 {
@@ -8,10 +10,14 @@ namespace Record_Shop_Backend.MVC_Repositories
     }
     public class AlbumRepository : IAlbumRepository
     {
+        private readonly AlbumDbContext _context;
+        public AlbumRepository(AlbumDbContext albumDb)
+        {
+            _context = albumDb;
+        }
         public IEnumerable<Album>? GrabAllAlbums()
         {
-            return null;
+            return _context.Albums.ToList() ?? new List<Album>();
         }
-
     }
 }

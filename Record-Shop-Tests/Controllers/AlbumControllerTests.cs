@@ -20,10 +20,10 @@ namespace Record_Shop_Tests.Controllers
         }
 
         [Test]
-        public void GetAllAlbums_ReturnsEmpty_WhenEmptyInput()
+        public void GetAllAlbums_ReturnsNoContent_WhenNullInput()
         {
             //Arrange
-            var albumList = new List<Album>() { };
+            List<Album>? albumList = null;
             _albumServiceMock.Setup(service => service.FetchAllAlbums()).Returns(albumList);
 
             //Act

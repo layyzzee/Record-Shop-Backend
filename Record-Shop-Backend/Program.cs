@@ -1,3 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using Record_Shop_Backend.MVC_Repositories;
+using Record_Shop_Backend.MVC_Services;
+using Record_Shop_Backend.Data;
 
 namespace Record_Shop_Backend
 {
@@ -8,7 +12,11 @@ namespace Record_Shop_Backend
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            builder.Services.AddDbContext<AlbumDbContext>(options => options.UseSqlServer(connectionString));
 
+            builder.Services.AddScoped<IAlbumService, AlbumService>();
+            builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
