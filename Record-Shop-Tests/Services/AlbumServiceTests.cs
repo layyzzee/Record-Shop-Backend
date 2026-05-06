@@ -263,5 +263,72 @@ namespace Record_Shop_Tests.ServicesTests
             //Assert
             Assert.That(result, Is.EqualTo(album));
         }
+
+
+        [Test]
+        public void UpdateAlbum_CalledOnce_IfValid()
+        {
+            // Arrange
+            Album album = new Album
+            {
+                AlbumId = 3,
+                Name = "Dark",
+                Artist = "Eden",
+                ReleaseYear = "2025",
+                Genre = "Glitch Hop / Alternative R&B",
+                Price = 18.99,
+                Stock = 50
+            };
+            _albumRepositoryMock.Setup(repo => repo.AlterAlbum(album)).Returns(album);
+
+            // Act
+            _albumService.UpdateAlbum(album);
+
+            // Assert
+            _albumRepositoryMock.Verify(repo => repo.AlterAlbum(album), Times.Once);
+        }
+        [Test]
+        public void UpdateAlbum_ReturnsNull_IfExceptionThrow()
+        {
+            // Arrange
+            Album album = new Album
+            {
+                AlbumId = 3,
+                Name = "Dark",
+                Artist = "Eden",
+                ReleaseYear = "2025",
+                Genre = "Glitch Hop / Alternative R&B",
+                Price = 18.99,
+                Stock = 50
+            };
+            _albumRepositoryMock.Setup(repo => repo.AlterAlbum(album)).Throws(new Exception());
+
+            // Act
+            var result = _albumService.UpdateAlbum(album);
+
+            // Assert
+            Assert.That(result, Is.Null);
+        }
+        [Test]
+        public void UpdateAlbum_ReturnsAlbum_InputValid()
+        {
+            //Arrange
+            Album album = new Album
+            {
+                AlbumId = 3,
+                Name = "Dark",
+                Artist = "Eden",
+                ReleaseYear = "2025",
+                Genre = "Glitch Hop / Alternative R&B",
+                Price = 18.99,
+                Stock = 50
+            };
+            _albumRepositoryMock.Setup(repository => repository.AlterAlbum(album)).Returns(album);
+            //Act
+            var result = _albumService.UpdateAlbum(album);
+
+            //Assert
+            Assert.That(result, Is.EqualTo(album));
+        }
     }
 }
