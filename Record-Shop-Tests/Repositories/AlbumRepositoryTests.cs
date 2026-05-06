@@ -319,7 +319,6 @@ namespace Record_Shop_Tests.RepositoriesTests
 
             //Act
             var result = _albumRepository.AlterAlbum(album);
-            Console.WriteLine(result.Name);
 
             //Assert
             Assert.That(_context.Albums, Is.EquivalentTo(albums));
@@ -348,6 +347,55 @@ namespace Record_Shop_Tests.RepositoriesTests
             //Assert
             Assert.That(_context.Albums, Is.EquivalentTo(albums));
             Assert.That(result.Name == "this album has been created");
+        }
+
+
+        [Test]
+        public void DestroyAlbum_ReturnsAlbum_IfValidAndDeleted()
+        {
+            //Arrange
+            Album album = new Album
+            {
+                AlbumId = 0,
+                Name = "Dark",
+                Artist = "Eden",
+                ReleaseYear = "2025",
+                Genre = "Glitch Hop / Alternative R&B",
+                Price = 18.99,
+                Stock = 50
+            };
+
+            //Act
+            var result = _albumRepository.AlterAlbum(album);
+
+
+            //Assert
+            Assert.That(result, Is.EqualTo(album));
+        }
+        [Test]
+        public void DestroyAlbum_ReturnsNewName_IfIdNotExists()
+        {
+            //Arrange
+            Album album = new Album
+            {
+                Name = "Dark",
+                Artist = "Eden",
+                ReleaseYear = "2025",
+                Genre = "Glitch Hop / Alternative R&B",
+                Price = 18.99,
+                Stock = 50
+            };
+            var newAlbum = album;
+            newAlbum.Name = "this album doesn't exist";
+            var albums = new List<Album> { album };
+
+            //Act
+            var result = _albumRepository.AlterAlbum(album);
+
+            //Assert
+            Assert.That(_context.Albums, Is.EquivalentTo(albums));
+            Assert.That(result.Name == album.Name);
+
         }
     }
 }

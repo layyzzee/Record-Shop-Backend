@@ -69,7 +69,7 @@ namespace Record_Shop_Backend.MVC_Controllers
         public IActionResult DeleteAlbum(int id)
         {
             var newAlbum = _albumService.RemoveAlbum(id);
-            if (newAlbum.Name == "this album doesn't exist") return BadRequest("this album doesn't exist");
+            if (newAlbum.Name == "this album doesn't exist") return BadRequest($"No album exists with the ID: {id}");
             return Ok(newAlbum);
         }
     }
