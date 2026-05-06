@@ -10,6 +10,7 @@ namespace Record_Shop_Backend.MVC_Services
         public Album? FetchAlbumById(int id);
         public Album? SendAlbum(Album album);
         public Album? UpdateAlbum(Album album);
+        public Album? RemoveAlbum(int id);
 
     }
     public class AlbumService : IAlbumService
@@ -81,6 +82,11 @@ namespace Record_Shop_Backend.MVC_Services
                 Console.WriteLine(e.Message);
                 return null;
             }
+        }
+
+        public Album? RemoveAlbum(int id)
+        {
+            return null;
         }
 
     }

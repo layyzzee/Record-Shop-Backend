@@ -145,6 +145,8 @@ namespace Record_Shop_Tests.RepositoriesTests
             //Assert
             Assert.That(result, Is.Null);
         }
+
+
         [Test]
         public void GrabAlbumById_ReturnsAlbum_WhenIdMatchesAlbum()
         {
@@ -207,6 +209,8 @@ namespace Record_Shop_Tests.RepositoriesTests
             Assert.That(result, Is.EqualTo(dark));
             Assert.That(result2, Is.EqualTo(ityttmom));
         }
+
+
         [Test]
         public void SubmitAlbum_ReturnsAlbum_IfValid()
         {
@@ -245,14 +249,105 @@ namespace Record_Shop_Tests.RepositoriesTests
                 Stock = 50
             };
             var albums = new List<Album> { album };
-            _context.Albums.Add(album);
-            _context.SaveChanges();
 
             //Act
             var result = _albumRepository.SubmitAlbum(album);
 
             //Assert
             Assert.That(_context.Albums, Is.EquivalentTo(albums));
+        }
+        [Test]
+        public void SubmitAlbum_ReturnsAlbum_IfIdInvalid()
+        {
+            //Arrange
+            Album album = new Album
+            {
+                AlbumId = 1,
+                Name = "Dark",
+                Artist = "Eden",
+                ReleaseYear = "2025",
+                Genre = "Glitch Hop / Alternative R&B",
+                Price = 18.99,
+                Stock = 50
+            };
+            var albums = new List<Album> { album };
+
+            //Act
+            var result = _albumRepository.SubmitAlbum(album);
+
+            //Assert
+            Assert.That(_context.Albums, Is.EquivalentTo(albums));
+        }
+
+
+        [Test]
+        public void AlterAlbum_ReturnsAlbum_IfValid()
+        {
+            //Arrange
+            Album album = new Album
+            {
+                AlbumId = 0,
+                Name = "Dark",
+                Artist = "Eden",
+                ReleaseYear = "2025",
+                Genre = "Glitch Hop / Alternative R&B",
+                Price = 18.99,
+                Stock = 50
+            };
+
+            //Act
+            var result = _albumRepository.AlterAlbum(album);
+
+
+            //Assert
+            Assert.That(result, Is.EqualTo(album));
+        }
+        [Test]
+        public void AlterAlbum_ReturnsAlbum_IfDatabaseUpdated()
+        {
+            //Arrange
+            Album album = new Album
+            {
+                Name = "Dark",
+                Artist = "Eden",
+                ReleaseYear = "2025",
+                Genre = "Glitch Hop / Alternative R&B",
+                Price = 18.99,
+                Stock = 50
+            };
+            var albums = new List<Album> { album };
+
+            //Act
+            var result = _albumRepository.AlterAlbum(album);
+            Console.WriteLine(result.Name);
+
+            //Assert
+            Assert.That(_context.Albums, Is.EquivalentTo(albums));
+            Assert.That(result.Name == album.Name);
+
+        }
+        [Test]
+        public void AlterAlbum_ReturnsAlbum_IfDatabaseCreatesNew()
+        {
+            //Arrange
+            Album album = new Album
+            {
+                AlbumId = 0,
+                Name = "Dark",
+                Artist = "Eden",
+                ReleaseYear = "2025",
+                Genre = "Glitch Hop / Alternative R&B",
+                Price = 18.99,
+                Stock = 50
+            };
+            var albums = new List<Album> { album };
+
+            //Act
+            var result = _albumRepository.AlterAlbum(album);
+
+            //Assert
+            Assert.That(_context.Albums, Is.EquivalentTo(albums));
+            Assert.That(result.Name == "this album has been created");
         }
     }
 }

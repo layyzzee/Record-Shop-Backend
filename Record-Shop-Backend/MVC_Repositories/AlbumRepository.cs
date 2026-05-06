@@ -10,6 +10,7 @@ namespace Record_Shop_Backend.MVC_Repositories
         public Album? GrabAlbumById(int id);
         public Album? SubmitAlbum(Album album);
         public Album? AlterAlbum(Album album);
+        public Album? DestroyAlbum(int id);
 
 
     }
@@ -33,11 +34,38 @@ namespace Record_Shop_Backend.MVC_Repositories
 
         public Album? SubmitAlbum(Album album)
         {
+            int holder = album.AlbumId;
+            album.AlbumId = 0;
             _context.Albums.Add(album);
-            return album; 
+            _context.SaveChanges();
+            album.AlbumId = holder;
+            return album;
         }
 
         public Album? AlterAlbum(Album album)
+        {
+            int holder = album.AlbumId;
+            album.AlbumId = 0;
+            var existingAlbum = _context.Albums.FirstOrDefault(a => a.Name == album.Name && a.Artist == album.Artist);
+            if(existingAlbum != null)
+            {
+                existingAlbum.ReleaseYear = album.ReleaseYear;
+                existingAlbum.Genre = album.Genre;
+                existingAlbum.Price = album.Price;
+                existingAlbum.Stock = album.Stock;
+                _context.SaveChanges();
+            }
+            else
+            {
+                _context.Albums.Add(album);
+                _context.SaveChanges();
+            }
+            album.AlbumId = holder;
+            album.Name = "this album has been created";
+            return album;
+        }
+
+        public Album? DestroyAlbum(int id)
         {
             return null;
         }

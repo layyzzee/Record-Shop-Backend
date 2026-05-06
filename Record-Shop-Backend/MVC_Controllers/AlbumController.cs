@@ -63,5 +63,13 @@ namespace Record_Shop_Backend.MVC_Controllers
             if(newAlbum.Name == "this album has been created") return CreatedAtAction(nameof(PutAlbum), newAlbum);
             return Ok(newAlbum);
         }
+
+        //Delete
+        [HttpPut]
+        public IActionResult DeleteAlbum(int id)
+        {
+            var newAlbum = _albumService.RemoveAlbum(id);
+            return null;
+        }
     }
 }
