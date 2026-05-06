@@ -330,5 +330,99 @@ namespace Record_Shop_Tests.ServicesTests
             //Assert
             Assert.That(result, Is.EqualTo(album));
         }
+
+
+        [Test]
+        public void RemoveAlbum_CalledOnce_IfValid()
+        {
+            // Arrange
+            Album album = new Album
+            {
+                AlbumId = 3,
+                Name = "Dark",
+                Artist = "Eden",
+                ReleaseYear = "2025",
+                Genre = "Glitch Hop / Alternative R&B",
+                Price = 18.99,
+                Stock = 50
+            };
+            int id = album.AlbumId;
+            _albumRepositoryMock.Setup(repo => repo.DestroyAlbum(id)).Returns(album);
+
+            // Act
+            _albumService.RemoveAlbum(id);
+
+            // Assert
+            _albumRepositoryMock.Verify(repo => repo.DestroyAlbum(id), Times.Once);
+        }
+        [Test]
+        public void RemoveAlbum_ReturnsNull_IfExceptionThrow()
+        {
+            // Arrange
+            Album album = new Album
+            {
+                AlbumId = 3,
+                Name = "Dark",
+                Artist = "Eden",
+                ReleaseYear = "2025",
+                Genre = "Glitch Hop / Alternative R&B",
+                Price = 18.99,
+                Stock = 50
+            };
+            int id = album.AlbumId;
+            _albumRepositoryMock.Setup(repo => repo.DestroyAlbum(id)).Throws(new Exception());
+
+            // Act
+            var result = _albumService.RemoveAlbum(id);
+
+            // Assert
+            Assert.That(result, Is.Null);
+        }
+        [Test]
+        public void RemoveAlbum_ReturnsAlbum_InputValid()
+        {
+            //Arrange
+            Album album = new Album
+            {
+                AlbumId = 3,
+                Name = "Dark",
+                Artist = "Eden",
+                ReleaseYear = "2025",
+                Genre = "Glitch Hop / Alternative R&B",
+                Price = 18.99,
+                Stock = 50
+            };
+            int id = album.AlbumId;
+            _albumRepositoryMock.Setup(repository => repository.DestroyAlbum(id)).Returns(album);
+            //Act
+            var result = _albumService.RemoveAlbum(id);
+
+            //Assert
+            Assert.That(result, Is.EqualTo(album));
+        }
+        [Test]
+        public void RemoveAlbum_ReturnsNewAlbumName_InputIdDoesntExist()
+        {
+            //Arrange
+            Album album = new Album
+            {
+                AlbumId = 3,
+                Name = "Dark",
+                Artist = "Eden",
+                ReleaseYear = "2025",
+                Genre = "Glitch Hop / Alternative R&B",
+                Price = 18.99,
+                Stock = 50
+            };
+            int id = album.AlbumId;
+            Album newAlbum = album;
+            newAlbum.Name = "this album doesn't exist";
+            _albumRepositoryMock.Setup(repository => repository.DestroyAlbum(id)).Returns(newAlbum);
+            //Act
+            var result = _albumService.RemoveAlbum(id);
+
+            //Assert
+            Assert.That(result.Name, Is.EqualTo(newAlbum.Name));
+        }
     }
 }

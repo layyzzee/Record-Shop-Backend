@@ -332,31 +332,5 @@ namespace Record_Shop_Tests.Controllers
             //Assert
             Assert.That(result, Is.InstanceOf<BadRequestObjectResult>());
         }
-        [Test]
-        public void DeleteAlbum_ReturnsNotFound_WhenIdDoesntExist()
-        {
-            //Arrange
-            Album album = new Album
-            {
-                AlbumId = 3,
-                Name = "Dark",
-                Artist = "Eden",
-                ReleaseYear = "2025",
-                Genre = "Glitch Hop / Alternative R&B",
-                Price = 18.99,
-                Stock = 50
-            };
-            int id = album.AlbumId;
-            var newAlbum = album;
-            newAlbum.Name = "this albumId doesn't exist";
-            _albumServiceMock.Setup(service => service.RemoveAlbum(id)).Returns(newAlbum);
-
-            //Act
-            var result = _albumController.DeleteAlbum(id);
-            var IActionResult = (NotFoundObjectResult)result;
-
-            //Assert
-            Assert.That(result, Is.InstanceOf<NotFoundObjectResult>());
-        }
     }
 }

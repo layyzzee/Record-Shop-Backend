@@ -86,7 +86,15 @@ namespace Record_Shop_Backend.MVC_Services
 
         public Album? RemoveAlbum(int id)
         {
-            return null;
+            try
+            {
+                return _albumRepository.DestroyAlbum(id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
         }
 
     }
