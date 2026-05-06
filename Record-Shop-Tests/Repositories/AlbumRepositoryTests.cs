@@ -207,5 +207,52 @@ namespace Record_Shop_Tests.RepositoriesTests
             Assert.That(result, Is.EqualTo(dark));
             Assert.That(result2, Is.EqualTo(ityttmom));
         }
+        [Test]
+        public void SubmitAlbum_ReturnsAlbum_IfValid()
+        {
+            //Arrange
+            Album album = new Album
+            {
+                AlbumId = 0,
+                Name = "Dark",
+                Artist = "Eden",
+                ReleaseYear = "2025",
+                Genre = "Glitch Hop / Alternative R&B",
+                Price = 18.99,
+                Stock = 50
+            };
+            _context.Albums.Add(album);
+            _context.SaveChanges();
+
+            //Act
+            var result = _albumRepository.SubmitAlbum(album);
+
+            //Assert
+            Assert.That(result, Is.EqualTo(album));
+        }
+        [Test]
+        public void SubmitAlbum_ReturnsAlbum_IfDatabaseUpdated()
+        {
+            //Arrange
+            Album album = new Album
+            {
+                AlbumId = 0,
+                Name = "Dark",
+                Artist = "Eden",
+                ReleaseYear = "2025",
+                Genre = "Glitch Hop / Alternative R&B",
+                Price = 18.99,
+                Stock = 50
+            };
+            var albums = new List<Album> { album };
+            _context.Albums.Add(album);
+            _context.SaveChanges();
+
+            //Act
+            var result = _albumRepository.SubmitAlbum(album);
+
+            //Assert
+            Assert.That(_context.Albums, Is.EquivalentTo(albums));
+        }
     }
 }

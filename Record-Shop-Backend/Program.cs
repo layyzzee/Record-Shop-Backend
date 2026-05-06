@@ -12,7 +12,7 @@ namespace Record_Shop_Backend
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddDbContext<AlbumDbContext>(options => options.UseInMemoryDatabase("Record Shop"));
+            builder.Services.AddDbContext<AlbumDbContext>(options => options.UseInMemoryDatabase("RecordShop"));
 
             builder.Services.AddScoped<IAlbumService, AlbumService>();
             builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
