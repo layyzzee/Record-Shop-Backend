@@ -65,11 +65,13 @@ namespace Record_Shop_Backend.MVC_Controllers
         }
 
         //Delete
-        [HttpPut]
+        [HttpDelete("{id}")]
         public IActionResult DeleteAlbum(int id)
         {
             var newAlbum = _albumService.RemoveAlbum(id);
-            return null;
+            if (newAlbum.Name == "this album doesn't exist") return BadRequest("this album doesn't exist");
+            if (newAlbum.Name == "this albumId doesn't exist") return NotFound("this albumId doesn't exist");
+            return Ok(newAlbum);
         }
     }
 }
