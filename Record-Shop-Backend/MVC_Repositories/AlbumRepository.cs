@@ -68,7 +68,7 @@ namespace Record_Shop_Backend.MVC_Repositories
         public Album? DestroyAlbum(int id)
         {
             var album = _context.Albums.FirstOrDefault(album => album.AlbumId == id);
-            var newAlbum = album;
+            var newAlbum = new Album();
             newAlbum.Name = "this album doesn't exist";
             if(album != null)
             {
@@ -80,7 +80,6 @@ namespace Record_Shop_Backend.MVC_Repositories
             {
                 return newAlbum;
             }
-
         }
 
     }
