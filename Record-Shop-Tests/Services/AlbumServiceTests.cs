@@ -197,5 +197,28 @@ namespace Record_Shop_Tests.ServicesTests
             _albumRepositoryMock.Verify(repo => repo.GrabAlbumById(testId), Times.Once);
         }
 
+
+        [Test]
+        public void SendAlbum_ReturnsAlbum_IfValid()
+        {
+            // Arrange
+            Album album = new Album
+            {
+                AlbumId = 3,
+                Name = "Dark",
+                Artist = "Eden",
+                ReleaseYear = "2025",
+                Genre = "Glitch Hop / Alternative R&B",
+                Price = 18.99,
+                Stock = 50
+            };
+            _albumRepositoryMock.Setup(repo => repo.SubmitAlbum(album)).Returns(album);
+
+            // Act
+            _albumService.FetchAlbumById(testId);
+
+            // Assert
+            _albumRepositoryMock.Verify(repo => repo.GrabAlbumById(testId), Times.Once);
+        }
     }
 }
