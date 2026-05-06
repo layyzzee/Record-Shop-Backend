@@ -55,7 +55,7 @@ namespace Record_Shop_Backend.MVC_Controllers
         }
 
         //PUT
-        [HttpPost]
+        [HttpPut]
         public IActionResult PutAlbum([FromBody] Album album)
         {
             var newAlbum = _albumService.UpdateAlbum(album);
