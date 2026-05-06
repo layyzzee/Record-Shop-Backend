@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Record_Shop_Backend.MVC_Services;
 using Record_Shop_Backend.MVC_Data_Models;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Record_Shop_Backend.MVC_Controllers
 {
@@ -45,13 +47,10 @@ namespace Record_Shop_Backend.MVC_Controllers
 
         //POST
         [HttpPost]
-        public IActionResult PostAlbum(Album album)
+        public IActionResult PostAlbum([FromBody]Album album)
         {
-            if (string.IsNullOrEmpty(album.Name))
-            {
-                return BadRequest("Album Name must be present");
-            }
-            return Ok(album);
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            return CreatedAtAction(nameof(PostAlbum), _albumService.SendAlbum(album));
         }
     }
 }

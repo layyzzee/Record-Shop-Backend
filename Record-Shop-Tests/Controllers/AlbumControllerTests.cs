@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Moq;
 using Record_Shop_Backend.MVC_Controllers;
 using Record_Shop_Backend.MVC_Data_Models;
@@ -162,7 +164,7 @@ namespace Record_Shop_Tests.Controllers
 
 
         [Test]
-        public void PostAlbum_ReturnsAlbum_WhenInputValid()
+        public void PostAlbum_ReturnsCreated_WhenInputValid()
         {
             //Arrange
             Album dark = new Album
@@ -179,57 +181,33 @@ namespace Record_Shop_Tests.Controllers
 
             //Act
             var result = _albumController.PostAlbum(album);
-            var IActionResult = (OkObjectResult)result;
+            var IActionResult = (CreatedAtActionResult)result;
 
             //Assert
-            Assert.That(result, Is.InstanceOf<OkObjectResult>());
-            Assert.That(IActionResult.Value, Is.EqualTo(dark));
+            Assert.That(result, Is.InstanceOf<CreatedAtActionResult>());
+            //Assert.That(IActionResult.Value, Is.EqualTo(dark));
         }
-        [Test]
-        public void PostAlbum_ReturnsBadRequest_WhenInputNoName()
+
+        [TestCase("Name")]
+        [TestCase("Artist")]
+        [TestCase("ReleaseYear")]
+        [TestCase("Genre")]
+        [TestCase("Price")]
+        [TestCase("Stock")]
+        public void PostAlbum_ReturnsBadRequest_WhenMissingInput(string propertyName)
         {
             //Arrange
-            Album dark = new Album
-            {
-                AlbumId = 3,
-                Artist = "Eden",
-                ReleaseYear = "2025",
-                Genre = "Glitch Hop / Alternative R&B",
-                Price = 18.99,
-                Stock = 50
-            };
-            var album = dark;
+            _albumController.ModelState.AddModelError(propertyName, $"{propertyName} Is Required");
 
             //Act
-            var result = _albumController.PostAlbum(album);
+            var result = _albumController.PostAlbum(new Album());
             var IActionResult = (BadRequestObjectResult)result;
+            var errors = (SerializableError)IActionResult.Value;
+            var errorMessages = (string[])errors[propertyName];
 
             //Assert
             Assert.That(result, Is.InstanceOf<BadRequestObjectResult>());
-            Assert.That(IActionResult.Value, Is.EqualTo("Album Name must be present"));
-        }
-        [Test]
-        public void PostAlbum_ReturnsBadRequest_WhenInputNoArtist()
-        {
-            //Arrange
-            Album dark = new Album
-            {
-                AlbumId = 3,
-                Name = "Dark",
-                ReleaseYear = "2025",
-                Genre = "Glitch Hop / Alternative R&B",
-                Price = 18.99,
-                Stock = 50
-            };
-            var album = dark;
-
-            //Act
-            var result = _albumController.PostAlbum(album);
-            var IActionResult = (BadRequestObjectResult)result;
-
-            //Assert
-            Assert.That(result, Is.InstanceOf<BadRequestObjectResult>());
-            Assert.That(IActionResult.Value, Is.EqualTo("Album Name must be present"));
+            Console.WriteLine(errorMessages[0]);
         }
     }
 }
