@@ -171,7 +171,7 @@ namespace Record_Shop_Tests.ServicesTests
             Assert.That(result, Is.EqualTo(dark));
         }
         [Test]
-        public void FetchAlbumById_ThrowsException_WhenRepositoryFails()
+        public void FetchAlbumById_ReturnsNull_WhenExceptionThrow()
         {
             // Arrange
             int id = 1;
@@ -184,7 +184,7 @@ namespace Record_Shop_Tests.ServicesTests
             Assert.That(result, Is.Null);
         }
         [Test]
-        public void FetchAlbumById_TimesCalled_Once()
+        public void FetchAlbumById_CalledOnce_IfValid()
         {
             // Arrange
             int testId = 2;
@@ -199,7 +199,7 @@ namespace Record_Shop_Tests.ServicesTests
 
 
         [Test]
-        public void SendAlbum_ReturnsAlbum_IfValid()
+        public void SendAlbum_CalledOnce_IfValid()
         {
             // Arrange
             Album album = new Album
@@ -215,10 +215,53 @@ namespace Record_Shop_Tests.ServicesTests
             _albumRepositoryMock.Setup(repo => repo.SubmitAlbum(album)).Returns(album);
 
             // Act
-            _albumService.FetchAlbumById(testId);
+            _albumService.SendAlbum(album);
 
             // Assert
-            _albumRepositoryMock.Verify(repo => repo.GrabAlbumById(testId), Times.Once);
+            _albumRepositoryMock.Verify(repo => repo.SubmitAlbum(album), Times.Once);
+        }
+        [Test]
+        public void SendAlbum_ReturnsNull_IfExceptionThrow()
+        {
+            // Arrange
+            Album album = new Album
+            {
+                AlbumId = 3,
+                Name = "Dark",
+                Artist = "Eden",
+                ReleaseYear = "2025",
+                Genre = "Glitch Hop / Alternative R&B",
+                Price = 18.99,
+                Stock = 50
+            };
+            _albumRepositoryMock.Setup(repo => repo.SubmitAlbum(album)).Throws(new Exception());
+
+            // Act
+            var result = _albumService.SendAlbum(album);
+
+            // Assert
+            Assert.That(result, Is.Null);
+        }
+        [Test]
+        public void SendAlbum_ReturnsAlbum_InputValid()
+        {
+            //Arrange
+            Album album = new Album
+            {
+                AlbumId = 3,
+                Name = "Dark",
+                Artist = "Eden",
+                ReleaseYear = "2025",
+                Genre = "Glitch Hop / Alternative R&B",
+                Price = 18.99,
+                Stock = 50
+            };
+            _albumRepositoryMock.Setup(repository => repository.SubmitAlbum(album)).Returns(album);
+            //Act
+            var result = _albumService.SendAlbum(album);
+
+            //Assert
+            Assert.That(result, Is.EqualTo(album));
         }
     }
 }

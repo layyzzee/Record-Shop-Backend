@@ -32,7 +32,7 @@ namespace Record_Shop_Backend.MVC_Repositories
 
         public Album? SubmitAlbum(Album album)
         {
-            return null;
+            return null; ;
         }
 
     }

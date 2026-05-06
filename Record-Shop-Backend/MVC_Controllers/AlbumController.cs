@@ -49,8 +49,9 @@ namespace Record_Shop_Backend.MVC_Controllers
         [HttpPost]
         public IActionResult PostAlbum([FromBody]Album album)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-            return CreatedAtAction(nameof(PostAlbum), _albumService.SendAlbum(album));
+            var newAlbum = _albumService.SendAlbum(album);
+            if (!ModelState.IsValid || newAlbum == null) return BadRequest(ModelState);
+            return CreatedAtAction(nameof(PostAlbum), newAlbum);
         }
     }
 }

@@ -167,7 +167,7 @@ namespace Record_Shop_Tests.Controllers
         public void PostAlbum_ReturnsCreated_WhenInputValid()
         {
             //Arrange
-            Album dark = new Album
+            Album album = new Album
             {
                 AlbumId = 3,
                 Name = "Dark",
@@ -177,7 +177,7 @@ namespace Record_Shop_Tests.Controllers
                 Price = 18.99,
                 Stock = 50
             };
-            var album = dark;
+            _albumServiceMock.Setup(service => service.SendAlbum(album)).Returns(album);
 
             //Act
             var result = _albumController.PostAlbum(album);
@@ -185,7 +185,6 @@ namespace Record_Shop_Tests.Controllers
 
             //Assert
             Assert.That(result, Is.InstanceOf<CreatedAtActionResult>());
-            //Assert.That(IActionResult.Value, Is.EqualTo(dark));
         }
 
         [TestCase("Name")]

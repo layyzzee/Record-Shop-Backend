@@ -58,7 +58,16 @@ namespace Record_Shop_Backend.MVC_Services
 
         public Album? SendAlbum(Album album)
         {
-            return null;
+            try
+            {
+                return _albumRepository.SubmitAlbum(album);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+
         }
     }
 }
