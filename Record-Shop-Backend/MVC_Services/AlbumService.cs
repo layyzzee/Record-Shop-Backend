@@ -9,6 +9,7 @@ namespace Record_Shop_Backend.MVC_Services
         public IEnumerable<Album>? FetchAllAlbums();
         public Album? FetchAlbumById(int id);
         public Album? SendAlbum(Album album);
+        public Album? UpdateAlbum(Album album);
 
     }
     public class AlbumService : IAlbumService
@@ -69,5 +70,18 @@ namespace Record_Shop_Backend.MVC_Services
             }
 
         }
+        public Album? UpdateAlbum(Album album)
+        {
+            try
+            {
+                return _albumRepository.AlterAlbum(album);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+
     }
 }

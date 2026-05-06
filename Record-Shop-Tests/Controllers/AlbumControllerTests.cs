@@ -95,7 +95,7 @@ namespace Record_Shop_Tests.Controllers
                 Price = 18.99,
                 Stock = 50
             };
-            var albumList = new List<Album>() { endCredits, ityttmom, dark};
+            var albumList = new List<Album>() { endCredits, ityttmom, dark };
             _albumServiceMock.Setup(service => service.FetchAllAlbums()).Returns(albumList);
 
             //Act
@@ -200,6 +200,77 @@ namespace Record_Shop_Tests.Controllers
 
             //Act
             var result = _albumController.PostAlbum(new Album());
+            var IActionResult = (BadRequestObjectResult)result;
+            var errors = (SerializableError)IActionResult.Value;
+            var errorMessages = (string[])errors[propertyName];
+
+            //Assert
+            Assert.That(result, Is.InstanceOf<BadRequestObjectResult>());
+            Console.WriteLine(errorMessages[0]);
+        }
+
+        [Test]
+        public void PutAlbum_ReturnsOk_WhenInputValidAndExistsOnDb()
+        {
+            //Arrange
+            Album album = new Album
+            {
+                AlbumId = 3,
+                Name = "Dark",
+                Artist = "Eden",
+                ReleaseYear = "2025",
+                Genre = "Glitch Hop / Alternative R&B",
+                Price = 18.99,
+                Stock = 50
+            };
+            _albumServiceMock.Setup(service => service.UpdateAlbum(album)).Returns(album);
+
+            //Act
+            var result = _albumController.PutAlbum(album);
+            var IActionResult = (OkObjectResult)result;
+
+            //Assert
+            Assert.That(result, Is.InstanceOf<OkObjectResult>());
+        }
+        [Test]
+        public void PutAlbum_ReturnsCreated_WhenInputValidButNotExistsOnDb()
+        {
+            //Arrange
+            Album album = new Album
+            {
+                AlbumId = 3,
+                Name = "Dark",
+                Artist = "Eden",
+                ReleaseYear = "2025",
+                Genre = "Glitch Hop / Alternative R&B",
+                Price = 18.99,
+                Stock = 50
+            };
+            var newAlbum = album;
+            newAlbum.Name = "this album has been created";
+            _albumServiceMock.Setup(service => service.UpdateAlbum(album)).Returns(newAlbum);
+
+            //Act
+            var result = _albumController.PutAlbum(album);
+            var IActionResult = (CreatedAtActionResult)result;
+
+            //Assert
+            Assert.That(result, Is.InstanceOf<CreatedAtActionResult>());
+        }
+
+        [TestCase("Name")]
+        [TestCase("Artist")]
+        [TestCase("ReleaseYear")]
+        [TestCase("Genre")]
+        [TestCase("Price")]
+        [TestCase("Stock")]
+        public void PutAlbum_ReturnsBadRequest_WhenMissingInput(string propertyName)
+        {
+            //Arrange
+            _albumController.ModelState.AddModelError(propertyName, $"{propertyName} Is Required");
+
+            //Act
+            var result = _albumController.PutAlbum(new Album());
             var IActionResult = (BadRequestObjectResult)result;
             var errors = (SerializableError)IActionResult.Value;
             var errorMessages = (string[])errors[propertyName];

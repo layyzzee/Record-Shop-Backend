@@ -9,6 +9,7 @@ namespace Record_Shop_Backend.MVC_Repositories
         public IEnumerable<Album>? GrabAllAlbums();
         public Album? GrabAlbumById(int id);
         public Album? SubmitAlbum(Album album);
+        public Album? AlterAlbum(Album album);
 
 
     }
@@ -34,6 +35,11 @@ namespace Record_Shop_Backend.MVC_Repositories
         {
             _context.Albums.Add(album);
             return album; 
+        }
+
+        public Album? AlterAlbum(Album album)
+        {
+            return null;
         }
 
     }

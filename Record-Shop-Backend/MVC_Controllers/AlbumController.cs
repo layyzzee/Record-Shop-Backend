@@ -53,5 +53,15 @@ namespace Record_Shop_Backend.MVC_Controllers
             if (!ModelState.IsValid || newAlbum == null) return BadRequest(ModelState);
             return CreatedAtAction(nameof(PostAlbum), newAlbum);
         }
+
+        //PUT
+        [HttpPost]
+        public IActionResult PutAlbum([FromBody] Album album)
+        {
+            var newAlbum = _albumService.UpdateAlbum(album);
+            if (!ModelState.IsValid || newAlbum == null) return BadRequest(ModelState);
+            if(newAlbum.Name == "this album has been created") return CreatedAtAction(nameof(PutAlbum), newAlbum);
+            return Ok(newAlbum);
+        }
     }
 }
