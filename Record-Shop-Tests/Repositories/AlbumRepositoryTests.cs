@@ -395,7 +395,6 @@ namespace Record_Shop_Tests.RepositoriesTests
             //Assert
             Assert.That(_context.Albums, Is.EquivalentTo(albums));
             Assert.That(result.Name == album.Name);
-
         }
     }
 }
