@@ -40,6 +40,7 @@ namespace Record_Shop_Tests.Controllers
             {
                 AlbumId = 1,
                 Name = "End Credits",
+                Artist = "Eden",
                 ReleaseYear = "2015",
                 Genre = "Electronic / Alt-Pop",
                 Price = 12.99,
@@ -66,6 +67,7 @@ namespace Record_Shop_Tests.Controllers
             {
                 AlbumId = 1,
                 Name = "End Credits",
+                Artist = "Eden",
                 ReleaseYear = "2015",
                 Genre = "Electronic / Alt-Pop",
                 Price = 12.99,
@@ -75,6 +77,7 @@ namespace Record_Shop_Tests.Controllers
             {
                 AlbumId = 2,
                 Name = "i think you think too much of me",
+                Artist = "Eden",
                 ReleaseYear = "2016",
                 Genre = "Indie Pop / Rock",
                 Price = 14.99,
@@ -84,6 +87,7 @@ namespace Record_Shop_Tests.Controllers
             {
                 AlbumId = 3,
                 Name = "Dark",
+                Artist = "Eden",
                 ReleaseYear = "2025",
                 Genre = "Glitch Hop / Alternative R&B",
                 Price = 18.99,
@@ -123,6 +127,7 @@ namespace Record_Shop_Tests.Controllers
             {
                 AlbumId = 3,
                 Name = "Dark",
+                Artist = "Eden",
                 ReleaseYear = "2025",
                 Genre = "Glitch Hop / Alternative R&B",
                 Price = 18.99,
@@ -164,6 +169,7 @@ namespace Record_Shop_Tests.Controllers
             {
                 AlbumId = 3,
                 Name = "Dark",
+                Artist = "Eden",
                 ReleaseYear = "2025",
                 Genre = "Glitch Hop / Alternative R&B",
                 Price = 18.99,
@@ -186,6 +192,30 @@ namespace Record_Shop_Tests.Controllers
             Album dark = new Album
             {
                 AlbumId = 3,
+                Artist = "Eden",
+                ReleaseYear = "2025",
+                Genre = "Glitch Hop / Alternative R&B",
+                Price = 18.99,
+                Stock = 50
+            };
+            var album = dark;
+
+            //Act
+            var result = _albumController.PostAlbum(album);
+            var IActionResult = (BadRequestObjectResult)result;
+
+            //Assert
+            Assert.That(result, Is.InstanceOf<BadRequestObjectResult>());
+            Assert.That(IActionResult.Value, Is.EqualTo("Album Name must be present"));
+        }
+        [Test]
+        public void PostAlbum_ReturnsBadRequest_WhenInputNoArtist()
+        {
+            //Arrange
+            Album dark = new Album
+            {
+                AlbumId = 3,
+                Name = "Dark",
                 ReleaseYear = "2025",
                 Genre = "Glitch Hop / Alternative R&B",
                 Price = 18.99,

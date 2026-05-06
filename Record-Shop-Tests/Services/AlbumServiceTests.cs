@@ -39,6 +39,7 @@ namespace Record_Shop_Tests.ServicesTests
             {
                 AlbumId = 1,
                 Name = "End Credits",
+                Artist = "Eden",
                 ReleaseYear = "2015",
                 Genre = "Electronic / Alt-Pop",
                 Price = 12.99,
@@ -62,6 +63,7 @@ namespace Record_Shop_Tests.ServicesTests
             {
                 AlbumId = 1,
                 Name = "End Credits",
+                Artist = "Eden",
                 ReleaseYear = "2015",
                 Genre = "Electronic / Alt-Pop",
                 Price = 12.99,
@@ -71,6 +73,7 @@ namespace Record_Shop_Tests.ServicesTests
             {
                 AlbumId = 2,
                 Name = "i think you think too much of me",
+                Artist = "Eden",
                 ReleaseYear = "2016",
                 Genre = "Indie Pop / Rock",
                 Price = 14.99,
@@ -80,6 +83,7 @@ namespace Record_Shop_Tests.ServicesTests
             {
                 AlbumId = 3,
                 Name = "Dark",
+                Artist = "Eden",
                 ReleaseYear = "2025",
                 Genre = "Glitch Hop / Alternative R&B",
                 Price = 18.99,
@@ -114,6 +118,7 @@ namespace Record_Shop_Tests.ServicesTests
             {
                 AlbumId = 3,
                 Name = "Dark",
+                Artist = "Eden",
                 ReleaseYear = "2025",
                 Genre = "Glitch Hop / Alternative R&B",
                 Price = 18.99,
@@ -150,6 +155,7 @@ namespace Record_Shop_Tests.ServicesTests
             {
                 AlbumId = 3,
                 Name = "Dark",
+                Artist = "Eden",
                 ReleaseYear = "2025",
                 Genre = "Glitch Hop / Alternative R&B",
                 Price = 18.99,
