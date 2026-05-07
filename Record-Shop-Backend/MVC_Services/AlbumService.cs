@@ -6,7 +6,7 @@ namespace Record_Shop_Backend.MVC_Services
 {
     public interface IAlbumService
     {
-        public IEnumerable<Album>? FetchAllAlbums();
+        public IEnumerable<Album>? FetchAllAlbumsInStock();
         public Album? FetchAlbumById(int id);
         public Album? SendAlbum(Album album);
         public Album? UpdateAlbum(Album album);
@@ -22,47 +22,30 @@ namespace Record_Shop_Backend.MVC_Services
         }
 
         //GET METHODS
-        public IEnumerable<Album>? FetchAllAlbums()
+        public IEnumerable<Album>? FetchAllAlbumsInStock()
         {
-            var albums = _albumRepository.GrabAllAlbums();
-            if (albums == null)
-            {
-                return null;
-            }
-            return albums;
+            return  _albumRepository.GrabAllAlbumsInStock();
         }
 
         public Album? FetchAlbumById(int id)
         {
-            var albums = _albumRepository.GrabAlbumById(id);
-            if (albums == null)
-            {
-                throw new ArgumentNullException("Album ID doesnt exist on the database");
-            }
-            return albums;
+            return _albumRepository.GrabAlbumById(id);
         
         }
 
         public Album? SendAlbum(Album album)
         {
-            var albums = _albumRepository.SubmitAlbum(album);
-            if (albums == null)
-            {
-                throw new ArgumentException("Album already exists in the database");
-            }
-            return albums;
+            return _albumRepository.SubmitAlbum(album);
         }
 
         public Album? UpdateAlbum(Album album)
         {
-            var albums = _albumRepository.AlterAlbum(album);
-            return albums;
+            return _albumRepository.AlterAlbum(album);
         }
 
         public Album? RemoveAlbum(int id)
         {
-            var albums = _albumRepository.DestroyAlbum(id);
-            return albums;
+            return _albumRepository.DestroyAlbum(id);
         }
 
     }

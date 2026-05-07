@@ -260,7 +260,7 @@ namespace Record_Shop_Tests.RepositoriesTests
             //Arrange
             Album album = new Album
             {
-                AlbumId = 1,
+                AlbumId = 0,
                 Name = "Dark",
                 Artist = "Eden",
                 ReleaseYear = "2025",

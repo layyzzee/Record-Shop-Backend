@@ -18,9 +18,9 @@ namespace Record_Shop_Backend.MVC_Controllers
 
         //GET METHODS
         [HttpGet]
-        public IActionResult GetAllAlbums()
+        public IActionResult GetAllAlbumsInStock()
         {
-            var albums = _albumService.FetchAllAlbums();
+            var albums = _albumService.FetchAllAlbumsInStock();
             if (albums == null)
             {
                 return NoContent();
@@ -33,11 +33,11 @@ namespace Record_Shop_Backend.MVC_Controllers
         public IActionResult GetAlbumById(int id)
         {
             var albums = _albumService.FetchAlbumById(id);
-            if(id <= 0)
+            if (id <= 0)
             {
                 return BadRequest("Please use a positive int as an ID");
             }
-            if(albums == null)
+            if (albums == null)
             {
                 return NotFound("No album has been registered with this ID");
             }
@@ -53,6 +53,10 @@ namespace Record_Shop_Backend.MVC_Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+            if(albums == null)
+            {
+                return Conflict(albums);
             }
             return CreatedAtAction(nameof(PostAlbum), albums);
         }

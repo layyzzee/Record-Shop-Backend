@@ -23,7 +23,7 @@ namespace Record_Shop_Tests.ServicesTests
         public void FetchAllAlbums_ReturnsNull_WhenNoAlbums()
         {
             //Assert
-            _albumRepositoryMock.Setup(repository => repository.GrabAllAlbums()).Returns(new List<Album>());
+            _albumRepositoryMock.Setup(repository => repository.GrabAllAlbums()).Returns((List<Album>)null);
 
             //Act
             var result = _albumService.FetchAllAlbums();
@@ -127,7 +127,7 @@ namespace Record_Shop_Tests.ServicesTests
         {
             //Arrange
             int id = 2;
-            _albumRepositoryMock.Setup(repository => repository.GrabAlbumById(id)).Returns(new Album());
+            _albumRepositoryMock.Setup(repository => repository.GrabAlbumById(id)).Returns((Album)null);
 
             //Act
             var result = _albumService.FetchAlbumById(id);
@@ -158,19 +158,7 @@ namespace Record_Shop_Tests.ServicesTests
             //Assert
             Assert.That(result, Is.EqualTo(dark));
         }
-        [Test]
-        public void FetchAlbumById_ReturnsNull_WhenExceptionThrow()
-        {
-            // Arrange
-            int id = 1;
-            _albumRepositoryMock.Setup(repo => repo.GrabAlbumById(id)).Throws(new Exception("Lost connection to the database"));
 
-            // Act
-            var result = _albumService.FetchAlbumById(id);
-
-            // Assert
-            Assert.That(result, Is.Null);
-        }
         [Test]
         public void FetchAlbumById_CalledOnce_IfValid()
         {

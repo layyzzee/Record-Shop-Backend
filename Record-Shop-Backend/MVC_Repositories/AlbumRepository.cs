@@ -6,7 +6,7 @@ namespace Record_Shop_Backend.MVC_Repositories
 {
     public interface IAlbumRepository
     {
-        public IEnumerable<Album>? GrabAllAlbums();
+        public IEnumerable<Album>? GrabAllAlbumsInStock();
         public Album? GrabAlbumById(int id);
         public Album? SubmitAlbum(Album album);
         public Album? AlterAlbum(Album album);
@@ -22,9 +22,14 @@ namespace Record_Shop_Backend.MVC_Repositories
             _context = albumDb;
         }
 
-        public IEnumerable<Album>? GrabAllAlbums()
+        public IEnumerable<Album>? GrabAllAlbumsInStock()
         {
-            return _context.Albums.ToList() ?? new List<Album>();
+            var albumsInStock = _context.Albums.Where(albums => albums.Stock > 0).ToList();
+            if (albumsInStock == null)
+            {
+                return null;
+            }
+            return albumsInStock;
         }
 
         public Album? GrabAlbumById(int id)
@@ -34,17 +39,14 @@ namespace Record_Shop_Backend.MVC_Repositories
 
         public Album? SubmitAlbum(Album album)
         {
-            var existingAlbum = _context.Albums.FirstOrDefault(a => a.Name == album.Name && a.Artist == album.Artist);
-            if (!_context.Albums.Contains(existingAlbum))
+            var exists = _context.Albums.Any(a => a.Name == album.Name && a.Artist == album.Artist);
+            if (!exists)
             {
                 _context.Albums.Add(album);
                 _context.SaveChanges();
                 return album;
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
         public Album? AlterAlbum(Album album)
