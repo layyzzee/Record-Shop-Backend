@@ -34,8 +34,8 @@ namespace Record_Shop_Backend.MVC_Repositories
 
         public Album? SubmitAlbum(Album album)
         {
-            album.AlbumId = 0;
-            if (!_context.Albums.Contains(album))
+            var existingAlbum = _context.Albums.FirstOrDefault(a => a.Name == album.Name && a.Artist == album.Artist);
+            if (!_context.Albums.Contains(existingAlbum))
             {
                 _context.Albums.Add(album);
                 _context.SaveChanges();

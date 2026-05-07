@@ -45,7 +45,7 @@ namespace Record_Shop_Backend.MVC_Controllers
 
         //POST
         [HttpPost]
-        public IActionResult PostAlbum([FromBody]Album album)
+        public IActionResult PostAlbum(Album album)
         {
             if (!ModelState.IsValid || _albumService.SendAlbum(album) == null)
             {
@@ -56,7 +56,7 @@ namespace Record_Shop_Backend.MVC_Controllers
 
         //PUT
         [HttpPut]
-        public IActionResult PutAlbum([FromBody] Album album)
+        public IActionResult PutAlbum(Album album)
         {
             if (!ModelState.IsValid || _albumService.UpdateAlbum(album) == null)
             {

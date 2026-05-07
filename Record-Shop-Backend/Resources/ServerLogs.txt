@@ -1,1 +1,12 @@
 ﻿Request received: GET /Album/99 at 13:40:23 07-05-2026
+Request received: GET /Album at 15:45:21 07-05-2026
+200
+Request received: POST /Album at 15:45:31 07-05-2026
+201
+Request received: POST /Album at 15:46:31 07-05-2026
+201
+Request received: POST /Album at 15:47:57 07-05-2026
+201
+Request received: POST /Album at 15:49:11 07-05-2026
+201
+Request received: POST /Album at 15:54:13 07-05-2026
