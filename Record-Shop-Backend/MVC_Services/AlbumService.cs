@@ -24,42 +24,45 @@ namespace Record_Shop_Backend.MVC_Services
         //GET METHODS
         public IEnumerable<Album>? FetchAllAlbums()
         {
-
             var albums = _albumRepository.GrabAllAlbums();
-            if (_albumRepository.GrabAllAlbums() == null)
+            if (albums == null)
             {
                 return null;
             }
-            return _albumRepository.GrabAllAlbums();
+            return albums;
         }
 
         public Album? FetchAlbumById(int id)
         {
-            if (_albumRepository.GrabAlbumById(id) == null)
+            var albums = _albumRepository.GrabAlbumById(id);
+            if (albums == null)
             {
                 throw new ArgumentNullException("Album ID doesnt exist on the database");
             }
-            return _albumRepository.GrabAlbumById(id);
+            return albums;
         
         }
 
         public Album? SendAlbum(Album album)
         {
-            if(_albumRepository.SubmitAlbum(album) == null)
+            var albums = _albumRepository.SubmitAlbum(album);
+            if (albums == null)
             {
                 throw new ArgumentException("Album already exists in the database");
             }
-            return _albumRepository.SubmitAlbum(album);
+            return albums;
         }
 
         public Album? UpdateAlbum(Album album)
         {
-            return _albumRepository.AlterAlbum(album);
+            var albums = _albumRepository.AlterAlbum(album);
+            return albums;
         }
 
         public Album? RemoveAlbum(int id)
         {
-            return _albumRepository.DestroyAlbum(id);
+            var albums = _albumRepository.DestroyAlbum(id);
+            return albums;
         }
 
     }
