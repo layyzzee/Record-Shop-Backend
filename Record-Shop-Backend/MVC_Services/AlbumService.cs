@@ -64,6 +64,11 @@ namespace Record_Shop_Backend.MVC_Services
             {
                 return _albumRepository.SubmitAlbum(album);
             }
+            catch (ArgumentException exists)
+            {
+                Console.WriteLine(exists.Message);
+                return null;
+            }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);

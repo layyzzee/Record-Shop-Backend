@@ -34,12 +34,19 @@ namespace Record_Shop_Backend.MVC_Repositories
 
         public Album? SubmitAlbum(Album album)
         {
-            int holder = album.AlbumId;
-            album.AlbumId = 0;
-            _context.Albums.Add(album);
-            _context.SaveChanges();
-            album.AlbumId = holder;
-            return album;
+            if (!_context.Albums.Contains(album))
+            {
+                int holder = album.AlbumId;
+                album.AlbumId = 0;
+                _context.Albums.Add(album);
+                _context.SaveChanges();
+                album.AlbumId = holder;
+                return album;
+            }
+            else
+            {
+                throw new ArgumentException("this album already exists");
+            }
         }
 
         public Album? AlterAlbum(Album album)

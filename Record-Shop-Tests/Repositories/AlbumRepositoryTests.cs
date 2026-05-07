@@ -225,8 +225,6 @@ namespace Record_Shop_Tests.RepositoriesTests
                 Price = 18.99,
                 Stock = 50
             };
-            _context.Albums.Add(album);
-            _context.SaveChanges();
 
             //Act
             var result = _albumRepository.SubmitAlbum(album);
@@ -277,6 +275,28 @@ namespace Record_Shop_Tests.RepositoriesTests
 
             //Assert
             Assert.That(_context.Albums, Is.EquivalentTo(albums));
+        }
+        [Test]
+        public void SubmitAlbum_ThrowsException_IfAlbumAlreadyExists()
+        {
+            //Arrange
+            Album album = new Album
+            {
+                AlbumId = 1,
+                Name = "Dark",
+                Artist = "Eden",
+                ReleaseYear = "2025",
+                Genre = "Glitch Hop / Alternative R&B",
+                Price = 18.99,
+                Stock = 50
+            };
+            _context.Albums.Add(album);
+
+            //Act
+            var result = _albumRepository.SubmitAlbum(album);
+
+            //Assert
+            Assert.Throws<ArgumentException>(() => _albumRepository.SubmitAlbum(album));
         }
 
 
