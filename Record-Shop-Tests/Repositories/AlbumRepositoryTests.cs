@@ -277,12 +277,12 @@ namespace Record_Shop_Tests.RepositoriesTests
             Assert.That(_context.Albums, Is.EquivalentTo(albums));
         }
         [Test]
-        public void SubmitAlbum_ThrowsException_IfAlbumAlreadyExists()
+        public void SubmitAlbum_ReturnsNull_IfAlbumAlreadyExists()
         {
             //Arrange
             Album album = new Album
             {
-                AlbumId = 1,
+                AlbumId = 0,
                 Name = "Dark",
                 Artist = "Eden",
                 ReleaseYear = "2025",
@@ -291,12 +291,14 @@ namespace Record_Shop_Tests.RepositoriesTests
                 Stock = 50
             };
             _context.Albums.Add(album);
+            _context.SaveChanges();
 
             //Act
             var result = _albumRepository.SubmitAlbum(album);
 
+
             //Assert
-            Assert.Throws<ArgumentException>(() => _albumRepository.SubmitAlbum(album));
+            Assert.That(result, Is.Null);
         }
 
 

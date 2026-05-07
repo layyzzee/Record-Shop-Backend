@@ -45,7 +45,7 @@ namespace Record_Shop_Backend.MVC_Repositories
             }
             else
             {
-                throw new ArgumentException("this album already exists");
+                return null;
             }
         }
 
