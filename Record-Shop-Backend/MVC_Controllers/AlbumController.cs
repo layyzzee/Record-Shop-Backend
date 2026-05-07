@@ -50,7 +50,10 @@ namespace Record_Shop_Backend.MVC_Controllers
         public IActionResult PostAlbum([FromBody]Album album)
         {
             var newAlbum = _albumService.SendAlbum(album);
-            if (!ModelState.IsValid || newAlbum == null) return BadRequest(ModelState);
+            if (!ModelState.IsValid || newAlbum == null)
+            {
+                return BadRequest(ModelState);
+            }
             return CreatedAtAction(nameof(PostAlbum), newAlbum);
         }
 
@@ -59,8 +62,14 @@ namespace Record_Shop_Backend.MVC_Controllers
         public IActionResult PutAlbum([FromBody] Album album)
         {
             var newAlbum = _albumService.UpdateAlbum(album);
-            if (!ModelState.IsValid || newAlbum == null) return BadRequest(ModelState);
-            if(newAlbum.Name == "this album has been created") return CreatedAtAction(nameof(PutAlbum), newAlbum);
+            if (!ModelState.IsValid || newAlbum == null)
+            {
+                return BadRequest(ModelState);
+            }
+            if (newAlbum.Name == "this album has been created")
+            {
+                return CreatedAtAction(nameof(PutAlbum), newAlbum);
+            }
             return Ok(newAlbum);
         }
 
@@ -69,7 +78,10 @@ namespace Record_Shop_Backend.MVC_Controllers
         public IActionResult DeleteAlbum(int id)
         {
             var newAlbum = _albumService.RemoveAlbum(id);
-            if (newAlbum.Name == "this album doesn't exist") return BadRequest($"No album exists with the ID: {id}");
+            if (newAlbum == null)
+            {
+                return BadRequest($"No album exists with the ID: {id}");
+            }
             return Ok(newAlbum);
         }
     }
