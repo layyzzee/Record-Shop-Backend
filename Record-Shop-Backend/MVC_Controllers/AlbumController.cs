@@ -20,12 +20,11 @@ namespace Record_Shop_Backend.MVC_Controllers
         [HttpGet]
         public IActionResult GetAllAlbums()
         {
-            var albums = _albumService.FetchAllAlbums();
-            if (albums == null)
+            if (_albumService.FetchAllAlbums() == null)
             {
                 return NoContent();
             }
-            return Ok(albums);
+            return Ok(_albumService.FetchAllAlbums());
         }
 
         [HttpGet]
@@ -36,12 +35,11 @@ namespace Record_Shop_Backend.MVC_Controllers
             {
                 return BadRequest("Please use a positive int as an ID");
             }
-            var album = _albumService.FetchAlbumById(id);
-            if(album == null)
+            if(_albumService.FetchAlbumById(id) == null)
             {
                 return NotFound("No album has been registered with this ID");
             }
-            return Ok(album);
+            return Ok(_albumService.FetchAlbumById(id));
         }
 
 
@@ -49,40 +47,37 @@ namespace Record_Shop_Backend.MVC_Controllers
         [HttpPost]
         public IActionResult PostAlbum([FromBody]Album album)
         {
-            var newAlbum = _albumService.SendAlbum(album);
-            if (!ModelState.IsValid || newAlbum == null)
+            if (!ModelState.IsValid || _albumService.SendAlbum(album) == null)
             {
                 return BadRequest(ModelState);
             }
-            return CreatedAtAction(nameof(PostAlbum), newAlbum);
+            return CreatedAtAction(nameof(PostAlbum), _albumService.SendAlbum(album));
         }
 
         //PUT
         [HttpPut]
         public IActionResult PutAlbum([FromBody] Album album)
         {
-            var newAlbum = _albumService.UpdateAlbum(album);
-            if (!ModelState.IsValid || newAlbum == null)
+            if (!ModelState.IsValid || _albumService.UpdateAlbum(album) == null)
             {
                 return BadRequest(ModelState);
             }
-            if (newAlbum.Name == "this album has been created")
+            if (_albumService.UpdateAlbum(album).Name == "this album has been created")
             {
-                return CreatedAtAction(nameof(PutAlbum), newAlbum);
+                return CreatedAtAction(nameof(PutAlbum), _albumService.UpdateAlbum(album));
             }
-            return Ok(newAlbum);
+            return Ok(_albumService.UpdateAlbum(album));
         }
 
         //Delete
         [HttpDelete("{id}")]
         public IActionResult DeleteAlbum(int id)
         {
-            var newAlbum = _albumService.RemoveAlbum(id);
-            if (newAlbum == null)
+            if (_albumService.RemoveAlbum(id) == null)
             {
                 return BadRequest($"No album exists with the ID: {id}");
             }
-            return Ok(newAlbum);
+            return Ok(_albumService.RemoveAlbum(id));
         }
     }
 }

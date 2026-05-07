@@ -24,6 +24,7 @@ namespace Record_Shop_Backend
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddTransient<ExceptionHandlerMiddleware>();
             builder.Services.AddTransient<LoggerMiddleware>();
             var app = builder.Build();
 
@@ -35,6 +36,9 @@ namespace Record_Shop_Backend
             }
 
             app.UseHttpsRedirection();
+
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
+            app.UseMiddleware<LoggerMiddleware>();
 
             app.UseAuthorization();
 

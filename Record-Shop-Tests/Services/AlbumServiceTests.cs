@@ -99,18 +99,6 @@ namespace Record_Shop_Tests.ServicesTests
             Assert.That(result, Is.EquivalentTo(albumList));
         }
         [Test]
-        public void FetchAllAlbums_ThrowsException_WhenRepositoryFails()
-        {
-            // Arrange
-            _albumRepositoryMock.Setup(repo => repo.GrabAllAlbums()).Throws(new Exception("Lost connection to the database"));
-
-            // Act
-            var result = _albumService.FetchAllAlbums();
-
-            // Assert
-            Assert.That(result, Is.Null);
-        }
-        [Test]
         public void FetchAllAlbums_TimesCalled_Once()
         {
             // Arrange
@@ -221,28 +209,6 @@ namespace Record_Shop_Tests.ServicesTests
             _albumRepositoryMock.Verify(repo => repo.SubmitAlbum(album), Times.Once);
         }
         [Test]
-        public void SendAlbum_ReturnsNull_IfExceptionThrow()
-        {
-            // Arrange
-            Album album = new Album
-            {
-                AlbumId = 3,
-                Name = "Dark",
-                Artist = "Eden",
-                ReleaseYear = "2025",
-                Genre = "Glitch Hop / Alternative R&B",
-                Price = 18.99,
-                Stock = 50
-            };
-            _albumRepositoryMock.Setup(repo => repo.SubmitAlbum(album)).Throws(new Exception());
-
-            // Act
-            var result = _albumService.SendAlbum(album);
-
-            // Assert
-            Assert.That(result, Is.Null);
-        }
-        [Test]
         public void SendAlbum_ReturnsAlbum_InputValid()
         {
             //Arrange
@@ -286,28 +252,6 @@ namespace Record_Shop_Tests.ServicesTests
 
             // Assert
             _albumRepositoryMock.Verify(repo => repo.AlterAlbum(album), Times.Once);
-        }
-        [Test]
-        public void UpdateAlbum_ReturnsNull_IfExceptionThrow()
-        {
-            // Arrange
-            Album album = new Album
-            {
-                AlbumId = 3,
-                Name = "Dark",
-                Artist = "Eden",
-                ReleaseYear = "2025",
-                Genre = "Glitch Hop / Alternative R&B",
-                Price = 18.99,
-                Stock = 50
-            };
-            _albumRepositoryMock.Setup(repo => repo.AlterAlbum(album)).Throws(new Exception());
-
-            // Act
-            var result = _albumService.UpdateAlbum(album);
-
-            // Assert
-            Assert.That(result, Is.Null);
         }
         [Test]
         public void UpdateAlbum_ReturnsAlbum_InputValid()
@@ -354,29 +298,6 @@ namespace Record_Shop_Tests.ServicesTests
 
             // Assert
             _albumRepositoryMock.Verify(repo => repo.DestroyAlbum(id), Times.Once);
-        }
-        [Test]
-        public void RemoveAlbum_ReturnsNull_IfExceptionThrow()
-        {
-            // Arrange
-            Album album = new Album
-            {
-                AlbumId = 3,
-                Name = "Dark",
-                Artist = "Eden",
-                ReleaseYear = "2025",
-                Genre = "Glitch Hop / Alternative R&B",
-                Price = 18.99,
-                Stock = 50
-            };
-            int id = album.AlbumId;
-            _albumRepositoryMock.Setup(repo => repo.DestroyAlbum(id)).Throws(new Exception());
-
-            // Act
-            var result = _albumService.RemoveAlbum(id);
-
-            // Assert
-            Assert.That(result, Is.Null);
         }
         [Test]
         public void RemoveAlbum_ReturnsAlbum_InputValid()

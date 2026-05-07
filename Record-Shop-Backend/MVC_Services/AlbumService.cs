@@ -24,82 +24,42 @@ namespace Record_Shop_Backend.MVC_Services
         //GET METHODS
         public IEnumerable<Album>? FetchAllAlbums()
         {
-            try
+
+            var albums = _albumRepository.GrabAllAlbums();
+            if (_albumRepository.GrabAllAlbums() == null)
             {
-                var albums = _albumRepository.GrabAllAlbums();
-                if (albums == null || !albums.Any())
-                {
-                    return null;
-                }
-                return albums;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
                 return null;
             }
+            return _albumRepository.GrabAllAlbums();
         }
 
         public Album? FetchAlbumById(int id)
         {
-            try
+            if (_albumRepository.GrabAlbumById(id) == null)
             {
-                var album = _albumRepository.GrabAlbumById(id);
-                if (album == null || string.IsNullOrEmpty(album.Name))
-                {
-                    return null;
-                }
-                return album;
+                throw new ArgumentNullException("Album ID doesnt exist on the database");
             }
-            catch (Exception ex) 
-            {
-                Console.WriteLine(ex.Message);
-                return null;
-            }
+            return _albumRepository.GrabAlbumById(id);
+        
         }
 
         public Album? SendAlbum(Album album)
         {
-            try
+            if(_albumRepository.SubmitAlbum(album) == null)
             {
-                return _albumRepository.SubmitAlbum(album);
+                throw new ArgumentException("Album already exists in the database");
             }
-            catch (ArgumentException exists)
-            {
-                Console.WriteLine(exists.Message);
-                return null;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return null;
-            }
-
+            return _albumRepository.SubmitAlbum(album);
         }
+
         public Album? UpdateAlbum(Album album)
         {
-            try
-            {
-                return _albumRepository.AlterAlbum(album);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return null;
-            }
+            return _albumRepository.AlterAlbum(album);
         }
 
         public Album? RemoveAlbum(int id)
         {
-            try
-            {
-                return _albumRepository.DestroyAlbum(id);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return null;
-            }
+            return _albumRepository.DestroyAlbum(id);
         }
 
     }
