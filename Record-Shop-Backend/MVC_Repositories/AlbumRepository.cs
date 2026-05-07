@@ -36,11 +36,9 @@ namespace Record_Shop_Backend.MVC_Repositories
         {
             if (!_context.Albums.Contains(album))
             {
-                int holder = album.AlbumId;
                 album.AlbumId = 0;
                 _context.Albums.Add(album);
                 _context.SaveChanges();
-                album.AlbumId = holder;
                 return album;
             }
             else
@@ -51,8 +49,6 @@ namespace Record_Shop_Backend.MVC_Repositories
 
         public Album? AlterAlbum(Album album)
         {
-            int holder = album.AlbumId;
-            album.AlbumId = 0;
             var existingAlbum = _context.Albums.FirstOrDefault(a => a.Name == album.Name && a.Artist == album.Artist);
             if(existingAlbum != null)
             {
@@ -64,11 +60,11 @@ namespace Record_Shop_Backend.MVC_Repositories
             }
             else
             {
+                album.AlbumId = 0;
                 _context.Albums.Add(album);
                 _context.SaveChanges();
+                album.Name = "this album has been created";
             }
-            album.AlbumId = holder;
-            album.Name = "this album has been created";
             return album;
         }
 

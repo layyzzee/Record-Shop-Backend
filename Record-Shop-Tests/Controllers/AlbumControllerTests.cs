@@ -321,9 +321,7 @@ namespace Record_Shop_Tests.Controllers
                 Stock = 50
             };
             int id = album.AlbumId;
-            var newAlbum = album;
-            newAlbum.Name = "this album doesn't exist";
-            _albumServiceMock.Setup(service => service.RemoveAlbum(id)).Returns(newAlbum);
+            _albumServiceMock.Setup(service => service.RemoveAlbum(id)).Returns((Album)null);
 
             //Act
             var result = _albumController.DeleteAlbum(id);
