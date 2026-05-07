@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using Record_Shop_Backend.Data;
+using Record_Shop_Backend.Middleware;
 using Record_Shop_Backend.MVC_Repositories;
 using Record_Shop_Backend.MVC_Services;
-using Record_Shop_Backend.Data;
 
 namespace Record_Shop_Backend
 {
@@ -22,7 +23,7 @@ namespace Record_Shop_Backend
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+            builder.Services.AddTransient<LoggerMiddleware>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
