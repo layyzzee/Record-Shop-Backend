@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Record_Shop_Backend.Data;
 using Record_Shop_Backend.Middleware;
 using Record_Shop_Backend.MVC_Repositories;
@@ -16,7 +17,7 @@ namespace Record_Shop_Backend
             string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddDbContext<AlbumDbContext>(options => options.UseSqlServer(connectionString));
             //Need to avoid duplicates being added
-
+            builder.Services.AddHealthChecks().AddCheck<AlbumHealthCheck>("album_health_check", failureStatus: HealthStatus.Unhealthy);
             builder.Services.AddScoped<IAlbumService, AlbumService>();
             builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
             builder.Services.AddControllers();
@@ -39,7 +40,7 @@ namespace Record_Shop_Backend
 
 
             app.MapControllers();
-
+            app.UseHealthChecks("/health");
             app.Run();
         }
     }
