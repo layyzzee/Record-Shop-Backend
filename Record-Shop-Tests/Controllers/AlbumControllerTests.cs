@@ -25,10 +25,10 @@ namespace Record_Shop_Tests.Controllers
         {
             //Arrange
             List<Album>? albumList = null;
-            _albumServiceMock.Setup(service => service.FetchAllAlbums()).Returns(albumList);
+            _albumServiceMock.Setup(service => service.FetchAllAlbumsInStock()).Returns(albumList);
 
             //Act
-            var result = _albumController.GetAllAlbums();
+            var result = _albumController.GetAllAlbumsInStock();
 
             //Assert
             Assert.That(result, Is.InstanceOf<NoContentResult>());
@@ -49,10 +49,10 @@ namespace Record_Shop_Tests.Controllers
                 Stock = 25
             };
             var albumList = new List<Album>() { endCredits };
-            _albumServiceMock.Setup(service => service.FetchAllAlbums()).Returns(albumList);
+            _albumServiceMock.Setup(service => service.FetchAllAlbumsInStock()).Returns(albumList);
 
             //Act
-            var result = _albumController.GetAllAlbums();
+            var result = _albumController.GetAllAlbumsInStock();
             var IActionResult = (OkObjectResult)result;
             var myAlbums = (IEnumerable<Album>)IActionResult.Value;
 
@@ -62,7 +62,7 @@ namespace Record_Shop_Tests.Controllers
         }
 
         [Test]
-        public void GetAllAlbums_ReturnsMyAlbums_WhenMultipleAlbums()
+        public void GetAllAlbumsInStock_ReturnsMyAlbums_WhenMultipleAlbums()
         {
             //Arrange
             Album endCredits = new Album
@@ -96,10 +96,10 @@ namespace Record_Shop_Tests.Controllers
                 Stock = 50
             };
             var albumList = new List<Album>() { endCredits, ityttmom, dark };
-            _albumServiceMock.Setup(service => service.FetchAllAlbums()).Returns(albumList);
+            _albumServiceMock.Setup(service => service.FetchAllAlbumsInStock()).Returns(albumList);
 
             //Act
-            var result = _albumController.GetAllAlbums();
+            var result = _albumController.GetAllAlbumsInStock();
             var IActionResult = (OkObjectResult)result;
             var myAlbums = (IEnumerable<Album>)IActionResult.Value;
 

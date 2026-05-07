@@ -23,10 +23,10 @@ namespace Record_Shop_Tests.ServicesTests
         public void FetchAllAlbums_ReturnsNull_WhenNoAlbums()
         {
             //Assert
-            _albumRepositoryMock.Setup(repository => repository.GrabAllAlbums()).Returns((List<Album>)null);
+            _albumRepositoryMock.Setup(repository => repository.GrabAllAlbumsInStock()).Returns((List<Album>)null);
 
             //Act
-            var result = _albumService.FetchAllAlbums();
+            var result = _albumService.FetchAllAlbumsInStock();
 
             //Assert
             Assert.That(result, Is.Null);
@@ -46,10 +46,10 @@ namespace Record_Shop_Tests.ServicesTests
                 Stock = 25
             };
             var albumList = new List<Album>() { endCredits };
-            _albumRepositoryMock.Setup(repository => repository.GrabAllAlbums()).Returns(albumList);
+            _albumRepositoryMock.Setup(repository => repository.GrabAllAlbumsInStock()).Returns(albumList);
 
             //Act
-            var result = _albumService.FetchAllAlbums();
+            var result = _albumService.FetchAllAlbumsInStock();
 
             //Assert
             Assert.That(result, Is.EquivalentTo(albumList));
@@ -90,10 +90,10 @@ namespace Record_Shop_Tests.ServicesTests
                 Stock = 50
             };
             var albumList = new List<Album>() { endCredits, ityttmom, dark };
-            _albumRepositoryMock.Setup(repository => repository.GrabAllAlbums()).Returns(albumList);
+            _albumRepositoryMock.Setup(repository => repository.GrabAllAlbumsInStock()).Returns(albumList);
 
             //Act
-            var result = _albumService.FetchAllAlbums();
+            var result = _albumService.FetchAllAlbumsInStock();
 
             //Assert
             Assert.That(result, Is.EquivalentTo(albumList));
@@ -112,13 +112,13 @@ namespace Record_Shop_Tests.ServicesTests
                 Price = 18.99,
                 Stock = 50
             };
-            _albumRepositoryMock.Setup(repo => repo.GrabAllAlbums()).Returns(new List<Album> { dark });
+            _albumRepositoryMock.Setup(repo => repo.GrabAllAlbumsInStock()).Returns(new List<Album> { dark });
 
             // Act
-            _albumService.FetchAllAlbums();
+            _albumService.FetchAllAlbumsInStock();
 
             // Assert
-            _albumRepositoryMock.Verify(repo => repo.GrabAllAlbums(), Times.Once);
+            _albumRepositoryMock.Verify(repo => repo.GrabAllAlbumsInStock(), Times.Once);
         }
 
 

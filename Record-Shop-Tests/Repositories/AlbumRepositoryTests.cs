@@ -40,20 +40,19 @@ namespace Record_Shop_Tests.RepositoriesTests
         }
 
         [Test]
-        public void GrabAllAlbums_ReturnsEmpty_WhenDbEmpty()
+        public void GrabAllAlbumsInStock_ReturnsEmpty_WhenDbEmpty()
         {
             //Arrange
 
 
             //Act
-            var result = _albumRepository.GrabAllAlbums();
+            var result = _albumRepository.GrabAllAlbumsInStock();
 
             //Assert
             Assert.That(result, Is.Empty);
         }
-
         [Test]
-        public void GrabAllAlbums_ReturnsSingle_WhenDbSingle()
+        public void GrabAllAlbumsInStock_ReturnsSingle_WhenDbSingle()
         {
             //Arrange
             Album endCredits = new Album
@@ -69,15 +68,14 @@ namespace Record_Shop_Tests.RepositoriesTests
             _context.Albums.Add(endCredits);
             _context.SaveChanges();
             //Act
-            var result = _albumRepository.GrabAllAlbums();
+            var result = _albumRepository.GrabAllAlbumsInStock();
 
             //Assert
             var expected = new List<Album> { endCredits };
             Assert.That(result, Is.EquivalentTo(expected));
         }
-
         [Test]
-        public void GrabAllAlbums_ReturnsMultiple_WhenDbMultiple()
+        public void GrabAllAlbumsInStock_ReturnsMultiple_WhenDbMultiple()
         {
             //Arrange
             Album endCredits = new Album
@@ -114,10 +112,53 @@ namespace Record_Shop_Tests.RepositoriesTests
             _context.Albums.AddRange(albumsToAdd);
             _context.SaveChanges();
             //Act
-            var result = _albumRepository.GrabAllAlbums();
+            var result = _albumRepository.GrabAllAlbumsInStock();
 
             //Assert
             Assert.That(result, Is.EquivalentTo(albumsToAdd));
+        }
+        public void GrabAllAlbumsInStock_ReturnsCorrect_WhenOneOutOfStock()
+        {
+            //Arrange
+            Album endCredits = new Album
+            {
+                AlbumId = 0,
+                Name = "End Credits",
+                Artist = "Eden",
+                ReleaseYear = "2015",
+                Genre = "Electronic / Alt-Pop",
+                Price = 12.99,
+                Stock = 25
+            };
+            Album ityttmom = new Album
+            {
+                AlbumId = 0,
+                Name = "i think you think too much of me",
+                Artist = "Eden",
+                ReleaseYear = "2016",
+                Genre = "Indie Pop / Rock",
+                Price = 14.99,
+                Stock = 0
+            };
+            Album dark = new Album
+            {
+                AlbumId = 0,
+                Name = "Dark",
+                Artist = "Eden",
+                ReleaseYear = "2025",
+                Genre = "Glitch Hop / Alternative R&B",
+                Price = 18.99,
+                Stock = 50
+            };
+            var albumsToAdd = new List<Album> { endCredits, ityttmom, dark };
+            _context.Albums.AddRange(albumsToAdd);
+            _context.SaveChanges();
+            //Act
+            var result = _albumRepository.GrabAllAlbumsInStock();
+
+            //Assert
+            var expected = new List<Album> { endCredits, dark };
+            Assert.That(result, Is.EquivalentTo(expected));
         }
 
 
