@@ -9,7 +9,7 @@
 *.user
 *.userosscache
 *.sln.docstates
-*.ServerLogs.txt
+.\Record-Shop-Backend\Resources\ServerLogs.txt
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
