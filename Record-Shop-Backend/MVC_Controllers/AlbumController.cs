@@ -29,7 +29,7 @@ namespace Record_Shop_Backend.MVC_Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("{id:int}")]
         public IActionResult GetAlbumById(int id)
         {
             var albums = _albumService.FetchAlbumById(id);
@@ -44,8 +44,9 @@ namespace Record_Shop_Backend.MVC_Controllers
             return Ok(albums);
         }
 
-        [HttpGet("{artist}")]
-        public IActionResult GetAlbumsByArtist(string artist)
+        [HttpGet]
+        [Route("{artist}")]
+        public IActionResult GetAlbumByArtist(string artist)
         {
             var albums = _albumService.FetchAlbumByArtist(artist);
             if (albums == null)
@@ -89,7 +90,7 @@ namespace Record_Shop_Backend.MVC_Controllers
         }
 
         //Delete
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public IActionResult DeleteAlbum(int id)
         {
             var albums = _albumService.RemoveAlbum(id);

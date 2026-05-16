@@ -11,7 +11,7 @@ namespace Record_Shop_Backend.MVC_Repositories
         public Album? SubmitAlbum(Album album);
         public Album? AlterAlbum(Album album);
         public Album? DestroyAlbum(int id);
-        public Album? GrabAlbumByArtist(string artist);
+        public IEnumerable<Album>? GrabAlbumByArtist(string artist);
 
 
     }
@@ -39,9 +39,9 @@ namespace Record_Shop_Backend.MVC_Repositories
             return _context.Albums.FirstOrDefault(album => album.AlbumId == id);
         }
 
-        public Album? GrabAlbumByArtist(string artist)
+        public IEnumerable<Album>? GrabAlbumByArtist(string artist)
         {
-            var albumsByArtist = _context.Albums.FirstOrDefault(a => a.Artist == artist);
+            var albumsByArtist = _context.Albums.Where(a => a.Artist.ToLower() == artist.ToLower()).ToList();
             if (albumsByArtist == null)
             {
                 return null;
@@ -55,6 +55,7 @@ namespace Record_Shop_Backend.MVC_Repositories
             var exists = _context.Albums.Any(a => a.Name == album.Name && a.Artist == album.Artist);
             if (!exists)
             {
+                album.AlbumId = 0;
                 _context.Albums.Add(album);
                 _context.SaveChanges();
                 return album;

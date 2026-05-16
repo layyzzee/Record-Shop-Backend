@@ -20,6 +20,9 @@ namespace Record_Shop_Tests.Controllers
             _albumController = new AlbumController(_albumServiceMock.Object);
         }
 
+        //                  //
+        //      GET         //
+        //                  //
         [Test]
         public void GetAllAlbums_ReturnsNoContent_WhenNullInput()
         {
@@ -33,7 +36,6 @@ namespace Record_Shop_Tests.Controllers
             //Assert
             Assert.That(result, Is.InstanceOf<NoContentResult>());
         }
-
         [Test]
         public void GetAllAlbums_ReturnsAlbumList_WhenSingleInput()
         {
@@ -60,7 +62,6 @@ namespace Record_Shop_Tests.Controllers
             Assert.That(albumList, Is.EquivalentTo(myAlbums));
             Assert.That(result, Is.InstanceOf<OkObjectResult>());
         }
-
         [Test]
         public void GetAllAlbumsInStock_ReturnsMyAlbums_WhenMultipleAlbums()
         {
@@ -107,8 +108,6 @@ namespace Record_Shop_Tests.Controllers
             Assert.That(albumList, Is.EquivalentTo(myAlbums));
             Assert.That(result, Is.InstanceOf<OkObjectResult>());
         }
-
-
         [Test]
         public void GetAlbumById_ReturnsNotFound_WhenIdNotExistsInDb()
         {
@@ -161,8 +160,51 @@ namespace Record_Shop_Tests.Controllers
             //Assert
             Assert.That(result, Is.InstanceOf<BadRequestObjectResult>());
         }
+        [Test]
+        public void GetAlbumByArtist_ReturnsNotFound_WhenArtistNotExistsInDb()
+        {
+            //Arrange
+            var artist = "Brakence";
+
+            //Act
+            var result = _albumController.GetAlbumByArtist(artist);
+
+            //Assert
+            Assert.That(result, Is.InstanceOf<NotFoundObjectResult>());
+        }
+        [Test]
+        public void GetAlbumByArtist_ReturnsOk_WhenValidRequest()
+        {
+            //Arrange
+            Album dark = new Album
+            {
+                AlbumId = 1,
+                Name = "Dark",
+                Artist = "Eden",
+                ReleaseYear = "2025",
+                Genre = "Glitch Hop / Alternative R&B",
+                Price = 18.99,
+                Stock = 50
+            };
+            IEnumerable<Album> albumList = new List<Album>() { dark };
+            var artist = "Eden";
+            _albumServiceMock.Setup(service => service.FetchAlbumByArtist(artist)).Returns(albumList);
 
 
+            //Act
+            var result = _albumController.GetAlbumByArtist(artist);
+            var IActionResult = (OkObjectResult)result;
+            var myAlbums = (Album)IActionResult.Value;
+
+            //Assert
+            var expected = albumList;
+            Assert.That(IActionResult.Value, Is.EqualTo(expected));
+            Assert.That(result, Is.InstanceOf<OkObjectResult>());
+        }
+
+        //                  //
+        //      POST        //
+        //                  //
         [Test]
         public void PostAlbum_ReturnsCreated_WhenInputValid()
         {
@@ -186,7 +228,6 @@ namespace Record_Shop_Tests.Controllers
             //Assert
             Assert.That(result, Is.InstanceOf<CreatedAtActionResult>());
         }
-
         [TestCase("Name")]
         [TestCase("Artist")]
         [TestCase("ReleaseYear")]
@@ -209,6 +250,9 @@ namespace Record_Shop_Tests.Controllers
             Console.WriteLine(errorMessages[0]);
         }
 
+        //                  //
+        //      PUT         //
+        //                  //
         [Test]
         public void PutAlbum_ReturnsOk_WhenInputValidAndExistsOnDb()
         {
@@ -257,7 +301,6 @@ namespace Record_Shop_Tests.Controllers
             //Assert
             Assert.That(result, Is.InstanceOf<CreatedAtActionResult>());
         }
-
         [TestCase("Name")]
         [TestCase("Artist")]
         [TestCase("ReleaseYear")]
@@ -280,8 +323,9 @@ namespace Record_Shop_Tests.Controllers
             Console.WriteLine(errorMessages[0]);
         }
 
-
-
+        //                  //
+        //      DELETE      //
+        //                  //
         [Test]
         public void DeleteAlbum_ReturnsOk_WhenDeleteSuccessful()
         {

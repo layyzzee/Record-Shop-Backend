@@ -39,6 +39,9 @@ namespace Record_Shop_Tests.RepositoriesTests
             _context.Dispose();
         }
 
+        //                  //
+        //      GET         //
+        //                  //
         [Test]
         public void GrabAllAlbumsInStock_ReturnsEmpty_WhenDbEmpty()
         {
@@ -160,8 +163,6 @@ namespace Record_Shop_Tests.RepositoriesTests
             var expected = new List<Album> { endCredits, dark };
             Assert.That(result, Is.EquivalentTo(expected));
         }
-
-
         [Test]
         public void GrabAlbumById_ReturnsNull_WhenDbEmpty()
         {
@@ -186,8 +187,6 @@ namespace Record_Shop_Tests.RepositoriesTests
             //Assert
             Assert.That(result, Is.Null);
         }
-
-
         [Test]
         public void GrabAlbumById_ReturnsAlbum_WhenIdMatchesAlbum()
         {
@@ -251,7 +250,9 @@ namespace Record_Shop_Tests.RepositoriesTests
             Assert.That(result2, Is.EqualTo(ityttmom));
         }
 
-
+        //                  //
+        //      POST        //
+        //                  //
         [Test]
         public void SubmitAlbum_ReturnsAlbum_IfValid()
         {
@@ -342,7 +343,9 @@ namespace Record_Shop_Tests.RepositoriesTests
             Assert.That(result, Is.Null);
         }
 
-
+        //                  //
+        //      PUT         //
+        //                  //
         [Test]
         public void AlterAlbum_ReturnsAlbum_IfValid()
         {
@@ -412,7 +415,9 @@ namespace Record_Shop_Tests.RepositoriesTests
             Assert.That(result.Name == "this album has been created");
         }
 
-
+        //                  //
+        //      DELETE      //
+        //                  //
         [Test]
         public void DestroyAlbum_ReturnsAlbum_IfValidAndDeleted()
         {

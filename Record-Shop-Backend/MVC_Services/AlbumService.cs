@@ -11,7 +11,7 @@ namespace Record_Shop_Backend.MVC_Services
         public Album? SendAlbum(Album album);
         public Album? UpdateAlbum(Album album);
         public Album? RemoveAlbum(int id);
-        public Album? FetchAlbumByArtist(string artist);
+        public IEnumerable<Album>? FetchAlbumByArtist(string artist);
 
     }
     public class AlbumService : IAlbumService
@@ -33,7 +33,7 @@ namespace Record_Shop_Backend.MVC_Services
             return _albumRepository.GrabAlbumById(id);        
         }
 
-        public Album? FetchAlbumByArtist(string artist)
+        public IEnumerable<Album>? FetchAlbumByArtist(string artist)
         {
             return _albumRepository.GrabAlbumByArtist(artist);
         }
