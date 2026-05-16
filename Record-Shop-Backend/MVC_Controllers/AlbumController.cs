@@ -39,7 +39,7 @@ namespace Record_Shop_Backend.MVC_Controllers
             }
             if (albums == null)
             {
-                return NotFound("No album has been registered with this ID");
+                return NotFound($"No album has been registered with this ID: {id}");
             }
             return Ok(albums);
         }
@@ -49,9 +49,9 @@ namespace Record_Shop_Backend.MVC_Controllers
         public IActionResult GetAlbumByArtist(string artist)
         {
             var albums = _albumService.FetchAlbumByArtist(artist);
-            if (albums == null)
+            if (albums.Count() == 0)
             {
-                return NoContent();
+                return NotFound($"No album's have been registered from {artist}");
             }
             return Ok(albums);
         }

@@ -194,7 +194,6 @@ namespace Record_Shop_Tests.Controllers
             //Act
             var result = _albumController.GetAlbumByArtist(artist);
             var IActionResult = (OkObjectResult)result;
-            var myAlbums = (Album)IActionResult.Value;
 
             //Assert
             var expected = albumList;
