@@ -29,7 +29,7 @@ namespace Record_Shop_Backend.MVC_Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("id/{id:int}")]
         public IActionResult GetAlbumById(int id)
         {
             var albums = _albumService.FetchAlbumById(id);
@@ -39,10 +39,47 @@ namespace Record_Shop_Backend.MVC_Controllers
             }
             if (albums == null)
             {
-                return NotFound("No album has been registered with this ID");
+                return NotFound($"No album has been registered with this ID: {id}");
             }
             return Ok(albums);
         }
+
+        [HttpGet]
+        [Route("artist/{artist}")]
+        public IActionResult GetAlbumByArtist(string artist)
+        {
+            var albums = _albumService.FetchAlbumByArtist(artist);
+            if (albums.Count() == 0)
+            {
+                return NotFound($"No album's have been registered from the artist: {artist}");
+            }
+            return Ok(albums);
+        }
+
+        [HttpGet]
+        [Route("year/{releaseYear:int}")]
+        public IActionResult GetAlbumByReleaseYear(int releaseYear)
+        {
+            var albums = _albumService.FetchAlbumByReleaseYear(releaseYear);
+            if (albums.Count() == 0)
+            {
+                return NotFound($"No album's have been registered from the year: {releaseYear}");
+            }
+            return Ok(albums);
+        }
+
+        [HttpGet]
+        [Route("genre/{genre}")]
+        public IActionResult FetchAlbumByGenre(string genre)
+        {
+            var albums = _albumService.FetchAlbumByGenre(genre);
+            if (albums.Count() == 0)
+            {
+                return NotFound($"No album's have been registered from the year: {genre}");
+            }
+            return Ok(albums);
+        }
+
 
 
         //POST
@@ -78,7 +115,7 @@ namespace Record_Shop_Backend.MVC_Controllers
         }
 
         //Delete
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public IActionResult DeleteAlbum(int id)
         {
             var albums = _albumService.RemoveAlbum(id);

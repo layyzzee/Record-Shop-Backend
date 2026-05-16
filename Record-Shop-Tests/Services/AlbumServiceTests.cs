@@ -19,6 +19,9 @@ namespace Record_Shop_Tests.ServicesTests
             _albumService = new AlbumService(_albumRepositoryMock.Object);
         }
 
+        //                  //
+        //      GET         //
+        //                  //
         [Test]
         public void FetchAllAlbums_ReturnsNull_WhenNoAlbums()
         {
@@ -31,7 +34,6 @@ namespace Record_Shop_Tests.ServicesTests
             //Assert
             Assert.That(result, Is.Null);
         }
-
         [Test]
         public void FetchAllAlbums_ReturnsSingle_WithSIngleInput()
         {
@@ -54,7 +56,6 @@ namespace Record_Shop_Tests.ServicesTests
             //Assert
             Assert.That(result, Is.EquivalentTo(albumList));
         }
-
         [Test]
         public void FetchAllAlbums_ReturnsMyAlbums_WhenMultipleAlbums()
         {
@@ -120,8 +121,6 @@ namespace Record_Shop_Tests.ServicesTests
             // Assert
             _albumRepositoryMock.Verify(repo => repo.GrabAllAlbumsInStock(), Times.Once);
         }
-
-
         [Test]
         public void FetchAlbumById_ReturnsNull_InputEmpty()
         {
@@ -158,7 +157,6 @@ namespace Record_Shop_Tests.ServicesTests
             //Assert
             Assert.That(result, Is.EqualTo(dark));
         }
-
         [Test]
         public void FetchAlbumById_CalledOnce_IfValid()
         {
@@ -173,7 +171,9 @@ namespace Record_Shop_Tests.ServicesTests
             _albumRepositoryMock.Verify(repo => repo.GrabAlbumById(testId), Times.Once);
         }
 
-
+        //                  //
+        //      POST        //
+        //                  //
         [Test]
         public void SendAlbum_CalledOnce_IfValid()
         {
@@ -218,7 +218,9 @@ namespace Record_Shop_Tests.ServicesTests
             Assert.That(result, Is.EqualTo(album));
         }
 
-
+        //                  //
+        //      PUT         //
+        //                  //
         [Test]
         public void UpdateAlbum_CalledOnce_IfValid()
         {
@@ -263,7 +265,9 @@ namespace Record_Shop_Tests.ServicesTests
             Assert.That(result, Is.EqualTo(album));
         }
 
-
+        //                  //
+        //      DELETE      //
+        //                  //
         [Test]
         public void RemoveAlbum_CalledOnce_IfValid()
         {

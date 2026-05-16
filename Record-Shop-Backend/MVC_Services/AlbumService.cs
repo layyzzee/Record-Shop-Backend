@@ -11,7 +11,9 @@ namespace Record_Shop_Backend.MVC_Services
         public Album? SendAlbum(Album album);
         public Album? UpdateAlbum(Album album);
         public Album? RemoveAlbum(int id);
-
+        public IEnumerable<Album>? FetchAlbumByArtist(string artist);
+        public IEnumerable<Album>? FetchAlbumByReleaseYear(int releaseYear);
+        public IEnumerable<Album>? FetchAlbumByGenre(string genre);
     }
     public class AlbumService : IAlbumService
     {
@@ -29,20 +31,37 @@ namespace Record_Shop_Backend.MVC_Services
 
         public Album? FetchAlbumById(int id)
         {
-            return _albumRepository.GrabAlbumById(id);
-        
+            return _albumRepository.GrabAlbumById(id);        
         }
 
+        public IEnumerable<Album>? FetchAlbumByArtist(string artist)
+        {
+            return _albumRepository.GrabAlbumByArtist(artist);
+        }
+
+        public IEnumerable<Album>? FetchAlbumByReleaseYear(int releaseYear)
+        {
+            return _albumRepository.GrabAlbumByReleaseYear(releaseYear);
+        }
+
+        public IEnumerable<Album>? FetchAlbumByGenre(string genre)
+        {
+            return _albumRepository.GrabAlbumByGenre(genre);
+        }
+
+        //POST METHODS
         public Album? SendAlbum(Album album)
         {
             return _albumRepository.SubmitAlbum(album);
         }
 
+        //PUT METHODS
         public Album? UpdateAlbum(Album album)
         {
             return _albumRepository.AlterAlbum(album);
         }
 
+        //DELETE METHODS
         public Album? RemoveAlbum(int id)
         {
             return _albumRepository.DestroyAlbum(id);
