@@ -13,10 +13,9 @@ namespace Record_Shop_Backend.MVC_Repositories
         public Album? DestroyAlbum(int id);
         public IEnumerable<Album>? GrabAlbumByArtist(string artist);
         public IEnumerable<Album>? GrabAlbumByReleaseYear(int releaseYear);
-
-
-
+        public IEnumerable<Album>? GrabAlbumByGenre(string genre);
     }
+
     public class AlbumRepository : IAlbumRepository
     {
         private readonly AlbumDbContext _context;
@@ -59,6 +58,16 @@ namespace Record_Shop_Backend.MVC_Repositories
                 return null;
             }
             return albumsbyYear;
+        }
+
+        public IEnumerable<Album>? GrabAlbumByGenre(string genre)
+        {
+            var albumsbyGenre = _context.Albums.Where(a => a.Genre.Contains(genre)).ToList();
+            if (albumsbyGenre == null)
+            {
+                return null;
+            }
+            return albumsbyGenre;
         }
 
         //POST METHODS

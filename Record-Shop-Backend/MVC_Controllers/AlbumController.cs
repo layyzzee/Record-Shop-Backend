@@ -68,6 +68,19 @@ namespace Record_Shop_Backend.MVC_Controllers
             return Ok(albums);
         }
 
+        [HttpGet]
+        [Route("genre/{genre}")]
+        public IActionResult FetchAlbumByGenre(string genre)
+        {
+            var albums = _albumService.FetchAlbumByGenre(genre);
+            if (albums.Count() == 0)
+            {
+                return NotFound($"No album's have been registered from the year: {genre}");
+            }
+            return Ok(albums);
+        }
+
+
 
         //POST
         [HttpPost]
