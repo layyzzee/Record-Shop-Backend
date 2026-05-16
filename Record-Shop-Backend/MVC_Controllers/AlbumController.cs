@@ -29,7 +29,7 @@ namespace Record_Shop_Backend.MVC_Controllers
         }
 
         [HttpGet]
-        [Route("{id:int}")]
+        [Route("id/{id:int}")]
         public IActionResult GetAlbumById(int id)
         {
             var albums = _albumService.FetchAlbumById(id);
@@ -45,13 +45,25 @@ namespace Record_Shop_Backend.MVC_Controllers
         }
 
         [HttpGet]
-        [Route("{artist}")]
+        [Route("artist/{artist}")]
         public IActionResult GetAlbumByArtist(string artist)
         {
             var albums = _albumService.FetchAlbumByArtist(artist);
             if (albums.Count() == 0)
             {
-                return NotFound($"No album's have been registered from {artist}");
+                return NotFound($"No album's have been registered from the artist: {artist}");
+            }
+            return Ok(albums);
+        }
+
+        [HttpGet]
+        [Route("year/{releaseYear:int}")]
+        public IActionResult GetAlbumByReleaseYear(int releaseYear)
+        {
+            var albums = _albumService.FetchAlbumByReleaseYear(releaseYear);
+            if (albums.Count() == 0)
+            {
+                return NotFound($"No album's have been registered from the year: {releaseYear}");
             }
             return Ok(albums);
         }

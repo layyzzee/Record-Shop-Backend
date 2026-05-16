@@ -12,6 +12,8 @@ namespace Record_Shop_Backend.MVC_Repositories
         public Album? AlterAlbum(Album album);
         public Album? DestroyAlbum(int id);
         public IEnumerable<Album>? GrabAlbumByArtist(string artist);
+        public IEnumerable<Album>? GrabAlbumByReleaseYear(int releaseYear);
+
 
 
     }
@@ -47,6 +49,16 @@ namespace Record_Shop_Backend.MVC_Repositories
                 return null;
             }
             return albumsByArtist;
+        }
+
+        public IEnumerable<Album>? GrabAlbumByReleaseYear(int releaseYear)
+        {
+            var albumsbyYear = _context.Albums.Where(a => a.ReleaseYear == releaseYear.ToString());
+            if (albumsbyYear == null)
+            {
+                return null;
+            }
+            return albumsbyYear;
         }
 
         //POST METHODS
