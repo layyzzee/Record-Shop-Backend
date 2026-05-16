@@ -29,6 +29,17 @@ namespace Record_Shop_Backend.MVC_Controllers
         }
 
         [HttpGet]
+        public IActionResult GetAlbumsByArtist(string artist)
+        {
+            var albums = _albumService.FetchAlbumByArtist(artist);
+            if (albums == null)
+            {
+                return NoContent();
+            }
+            return Ok(albums);
+        }
+
+        [HttpGet]
         [Route("{id}")]
         public IActionResult GetAlbumById(int id)
         {

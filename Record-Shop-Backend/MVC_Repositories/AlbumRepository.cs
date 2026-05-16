@@ -11,6 +11,7 @@ namespace Record_Shop_Backend.MVC_Repositories
         public Album? SubmitAlbum(Album album);
         public Album? AlterAlbum(Album album);
         public Album? DestroyAlbum(int id);
+        public Album? GrabAlbumByArtist(string artist);
 
 
     }
@@ -22,6 +23,7 @@ namespace Record_Shop_Backend.MVC_Repositories
             _context = albumDb;
         }
 
+        //GET METHODS
         public IEnumerable<Album>? GrabAllAlbumsInStock()
         {
             var albumsInStock = _context.Albums.Where(albums => albums.Stock > 0).ToList();
@@ -37,6 +39,17 @@ namespace Record_Shop_Backend.MVC_Repositories
             return _context.Albums.FirstOrDefault(album => album.AlbumId == id);
         }
 
+        public Album? GrabAlbumByArtist(string artist)
+        {
+            var albumsByArtist = _context.Albums.FirstOrDefault(a => a.Artist == artist);
+            if (albumsByArtist == null)
+            {
+                return null;
+            }
+            return albumsByArtist;
+        }
+
+        //POST METHODS
         public Album? SubmitAlbum(Album album)
         {
             var exists = _context.Albums.Any(a => a.Name == album.Name && a.Artist == album.Artist);
@@ -49,6 +62,7 @@ namespace Record_Shop_Backend.MVC_Repositories
             return null;
         }
 
+        //PUT METHODS
         public Album? AlterAlbum(Album album)
         {
             var existingAlbum = _context.Albums.FirstOrDefault(a => a.Name == album.Name && a.Artist == album.Artist);
@@ -70,6 +84,7 @@ namespace Record_Shop_Backend.MVC_Repositories
             return album;
         }
 
+        //DELETE METHODS
         public Album? DestroyAlbum(int id)
         {
             var album = _context.Albums.FirstOrDefault(album => album.AlbumId == id);
