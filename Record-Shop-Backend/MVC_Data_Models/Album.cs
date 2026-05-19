@@ -17,5 +17,7 @@ namespace Record_Shop_Backend.MVC_Data_Models
         public double? Price { get; set; }
         [Required(ErrorMessage = "Stock Is required")]
         public int? Stock { get; set; }
+        public string ImageUrl { get; set; }
+
     }
 }
