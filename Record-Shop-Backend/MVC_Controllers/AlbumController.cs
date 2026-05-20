@@ -107,10 +107,6 @@ namespace Record_Shop_Backend.MVC_Controllers
             {
                 return BadRequest(ModelState);
             }
-            if (albums.Name == "this album has been created")
-            {
-                return CreatedAtAction(nameof(PutAlbum), albums);
-            }
             return Ok(albums);
         }
 

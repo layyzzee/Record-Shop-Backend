@@ -98,15 +98,12 @@ namespace Record_Shop_Backend.MVC_Repositories
                 existingAlbum.Stock = album.Stock;
                 existingAlbum.ImageUrl = album.ImageUrl;
                 _context.SaveChanges();
+                return album;
             }
             else
             {
-                album.AlbumId = 0;
-                _context.Albums.Add(album);
-                _context.SaveChanges();
-                album.Name = "this album has been created";
+                return null;
             }
-            return album;
         }
 
         //DELETE METHODS
