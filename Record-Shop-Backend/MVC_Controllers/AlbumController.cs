@@ -28,8 +28,7 @@ namespace Record_Shop_Backend.MVC_Controllers
             return Ok(albums);
         }
 
-        [HttpGet]
-        [Route("id/{id:int}")]
+        [HttpGet("id/{id:int}")]
         public IActionResult GetAlbumById(int id)
         {
             var albums = _albumService.FetchAlbumById(id);
@@ -44,8 +43,7 @@ namespace Record_Shop_Backend.MVC_Controllers
             return Ok(albums);
         }
 
-        [HttpGet]
-        [Route("artist/{artist}")]
+        [HttpGet("artist/{artist}")]
         public IActionResult GetAlbumByArtist(string artist)
         {
             var albums = _albumService.FetchAlbumByArtist(artist);
@@ -56,8 +54,7 @@ namespace Record_Shop_Backend.MVC_Controllers
             return Ok(albums);
         }
 
-        [HttpGet]
-        [Route("year/{releaseYear:int}")]
+        [HttpGet("year/{releaseYear:int}")]
         public IActionResult GetAlbumByReleaseYear(int releaseYear)
         {
             var albums = _albumService.FetchAlbumByReleaseYear(releaseYear);
@@ -68,8 +65,7 @@ namespace Record_Shop_Backend.MVC_Controllers
             return Ok(albums);
         }
 
-        [HttpGet]
-        [Route("genre/{genre}")]
+        [HttpGet("genre/{genre}")]
         public IActionResult FetchAlbumByGenre(string genre)
         {
             var albums = _albumService.FetchAlbumByGenre(genre);
@@ -99,7 +95,7 @@ namespace Record_Shop_Backend.MVC_Controllers
         }
 
         //PUT
-        [HttpPut]
+        [HttpPut("{id:int}")]
         public IActionResult PutAlbum(Album album)
         {
             var albums = _albumService.UpdateAlbum(album);
