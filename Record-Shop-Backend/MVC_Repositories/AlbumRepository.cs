@@ -87,13 +87,16 @@ namespace Record_Shop_Backend.MVC_Repositories
         //PUT METHODS
         public Album? AlterAlbum(Album album)
         {
-            var existingAlbum = _context.Albums.FirstOrDefault(a => a.Name == album.Name && a.Artist == album.Artist);
+            var existingAlbum = _context.Albums.FirstOrDefault(a => a.AlbumId == album.AlbumId);
             if(existingAlbum != null)
             {
+                existingAlbum.Name = album.Name;
+                existingAlbum.Artist = album.Artist;
                 existingAlbum.ReleaseYear = album.ReleaseYear;
                 existingAlbum.Genre = album.Genre;
                 existingAlbum.Price = album.Price;
                 existingAlbum.Stock = album.Stock;
+                existingAlbum.ImageUrl = album.ImageUrl;
                 _context.SaveChanges();
             }
             else
